@@ -11,6 +11,9 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        
+        "no-plusplus": "off",
+        "no-param-reassign": "off",
+        "no-return-assign": "off",
+        "consistent-return": "off"
     }
 }
