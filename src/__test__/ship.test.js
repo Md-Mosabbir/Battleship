@@ -15,5 +15,11 @@ describe('Create a Ship', () => {
     expect(submarine.coordinates).toEqual([])
   })
 
-  it('Check wether ships gets hit', () => {})
+  it('Check wether ships gets hit', () => {
+    submarine.hit()
+    submarine.hit()
+    submarine.hit()
+    submarine.hit()
+    expect(submarine.isSunk()).toEqual(true)
+  })
 })
