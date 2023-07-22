@@ -14,6 +14,7 @@
         "no-plusplus": "off",
         "no-param-reassign": "off",
         "no-return-assign": "off",
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "no-underscore-dangle":"off"
     }
 }
