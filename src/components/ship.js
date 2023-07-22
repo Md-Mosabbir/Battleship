@@ -1,4 +1,4 @@
-function Ship(length, hits = 0, sunk = false) {
+function Ship(name, length, hits = 0, sunk = false) {
   function hit() {
     return hits++
   }
@@ -8,7 +8,7 @@ function Ship(length, hits = 0, sunk = false) {
     }
     return sunk
   }
-  return { hit, isSunk, orientation: 'vertical', coordinates: [] }
+  return { hit, isSunk, orientation: 'vertical', coordinates: [0, 0] }
 }
 
 export default Ship

@@ -5,7 +5,7 @@ import Ship from '../components/ship'
 describe('Create a Ship', () => {
   let submarine
   beforeAll(() => {
-    submarine = Ship(4)
+    submarine = Ship('Submarine', 4)
   })
 
   it('Checks all the properties of Ship', () => {
