@@ -22,6 +22,7 @@ function Gameboard() {
 
     return array
   }
+  return { createShips, assignCoordinates }
 
   // Todo: recieveAttack()
   // Todo: give length to ship within the board
