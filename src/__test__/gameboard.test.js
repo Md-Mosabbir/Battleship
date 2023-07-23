@@ -14,4 +14,7 @@ describe('Tests for Gameboard and Ship intregation', () => {
     expect(shipsCreated[1].coordinates).toEqual([2, 5])
     expect(shipsCreated[4].coordinates).toEqual([2, 3])
   })
+  it('Recieves Attack and sinks one of the ships', () => {
+    gameboard.assignCoordinates(shipsCreated, 4, 2, 3)
+  })
 })

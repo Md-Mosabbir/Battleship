@@ -1,9 +1,9 @@
-function Ship(name, length, hits = 0, sunk = false) {
+function Ship(name, lengthShips, hits = 0, sunk = false) {
   function hit() {
     return hits++
   }
   function isSunk() {
-    if (length === hits) {
+    if (lengthShips === hits) {
       sunk = true
     }
     return sunk
