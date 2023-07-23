@@ -16,41 +16,20 @@ function Gameboard() {
   // Todo: assign coordinates
   function assignCoordinates(arr, index, x, y) {
     const array = [...arr]
+    const ship = array[index]
+    ship.coordinates = [] // Empty the coordinates array
 
-    array[index].coordinates[0] = x
-    array[index].coordinates[1] = y
-
-    return array
-  }
-
-  // Todo: give length to ship within the board
-  function getAllShipSquares(arr) {
-    const array = [...arr]
-    const getShipsCoor = []
-
-    //* Segragate vertical and horizontal ships
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].orientation === 'vertical') {
-        for (let y = 0; y < array[i].lengthShip; y++) {
-          getShipsCoor.push([
-            array[i].coordinates[0],
-            array[i].coordinates[1] + y,
-          ])
-        }
-      } else if (array[i].orientation === 'horizontal') {
-        for (
-          let x = array[i].coordinates[0];
-          x <= array[i].lengthShip + array[i].coordinates[0];
-          x++
-        ) {
-          getShipsCoor.push([
-            array[i].coordinates[0] + x,
-            array[i].coordinates[1],
-          ])
-        }
+    if (ship.orientation === 'vertical') {
+      for (let c = 0; c < ship.lengthShips; c++) {
+        ship.coordinates.push([x, y + c])
+      }
+    } else if (ship.orientation === 'horizontal') {
+      for (let c = 0; c < ship.lengthShips; c++) {
+        ship.coordinates.push([x + c, y])
       }
     }
-    return getShipsCoor
+
+    return array
   }
 
   // Todo: recieveAttack()
@@ -58,18 +37,14 @@ function Gameboard() {
     const array = [...arr]
     const missed = []
 
-    const isMatch = getAllShipSquares(array).some(
-      ([targetX, targetY]) => targetX === x && targetY === y
+    //* Match if array's coordinate matches x and y
+    const isMatch = array.find((ship) =>
+      ship.coordinates.some((coords) => coords[0] === x && coords[1] === y)
     )
 
     if (isMatch) {
-      const matchShip = array.find(
-        ({ coordinates }) => coordinates[0] === x && coordinates[1] === y
-      )
-      if (matchShip) {
-        matchShip.hit()
-        return true
-      }
+      isMatch.hit()
+      return true
     }
     if (!isMatch) {
       missed.push([x, y])
@@ -79,7 +54,6 @@ function Gameboard() {
 
   // Todo: delete destroyed ship
   // Todo: track destroyed ship
-  // Todo: record missed attack
 
   return { createShips, assignCoordinates, recieveAttack }
 }

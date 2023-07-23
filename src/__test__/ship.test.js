@@ -10,6 +10,7 @@ describe('Create a Ship', () => {
 
   it('Checks all the properties of Ship', () => {
     expect(submarine).toBeDefined()
+    expect(submarine.lengthShips).toEqual(4)
     expect(submarine.isSunk()).toEqual(false)
     expect(submarine.orientation).toMatch('vertical')
     expect(submarine.coordinates).toEqual([0, 0])

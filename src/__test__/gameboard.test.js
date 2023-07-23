@@ -1,20 +1,40 @@
 import Gameboard from '../components/gameboard'
-import Ship from '../components/ship'
-describe('Tests for Gameboard and Ship intregation', () => {
-  let gameboard
-  let shipsCreated
-  beforeAll(() => {
-    gameboard = Gameboard()
-    shipsCreated = gameboard.createShips()
-  })
+let gameboard
+let shipsCreated
+beforeAll(() => {
+  gameboard = Gameboard()
+  shipsCreated = gameboard.createShips()
+})
+describe('Tests for assigning Coordinates and Ship intregation', () => {
   it('Check for assigning creation', () => {
-    gameboard.assignCoordinates(shipsCreated, 4, 2, 3)
-    gameboard.assignCoordinates(shipsCreated, 1, 2, 5)
-
-    expect(shipsCreated[1].coordinates).toEqual([2, 5])
-    expect(shipsCreated[4].coordinates).toEqual([2, 3])
+    const updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
+    expect(updatedShips[0].coordinates).toEqual([
+      [2, 3],
+      [2, 4],
+      [2, 5],
+      [2, 6],
+      [2, 7],
+    ])
   })
-  it('Recieves Attack and sinks one of the ships', () => {
-    gameboard.assignCoordinates(shipsCreated, 4, 2, 3)
+  it('Does not change other ships', () => {
+    const updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
+    expect(updatedShips[1].coordinates).toEqual([0, 0])
+  })
+})
+
+describe('Recieving attack', () => {
+  it('Attacks a ship', () => {
+    const updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
+
+    const successfulAttack = gameboard.recieveAttack(updatedShips, 2, 3)
+
+    expect(successfulAttack).toBe(true)
+  })
+  it('Misses an attack on a ship', () => {
+    const updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
+
+    const faliedAttack = gameboard.recieveAttack(updatedShips, 2, 0)
+
+    expect(faliedAttack).toBe(false)
   })
 })

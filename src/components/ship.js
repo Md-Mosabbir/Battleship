@@ -8,7 +8,13 @@ function Ship(name, lengthShips, hits = 0, sunk = false) {
     }
     return sunk
   }
-  return { hit, isSunk, orientation: 'vertical', coordinates: [0, 0] }
+  return {
+    lengthShips,
+    hit,
+    isSunk,
+    orientation: 'vertical',
+    coordinates: [0, 0],
+  }
 }
 
 export default Ship
