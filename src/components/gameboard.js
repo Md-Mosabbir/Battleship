@@ -19,43 +19,67 @@ function Gameboard() {
     const ship = array[index]
     ship.coordinates = [] // Empty the coordinates array
 
+    const updatedShip = { ...ship, coordinates: [] }
+
     if (ship.orientation === 'vertical') {
       for (let c = 0; c < ship.lengthShips; c++) {
-        ship.coordinates.push([x, y + c])
+        updatedShip.coordinates.push([x, y + c])
       }
     } else if (ship.orientation === 'horizontal') {
       for (let c = 0; c < ship.lengthShips; c++) {
-        ship.coordinates.push([x + c, y])
+        updatedShip.coordinates.push([x + c, y])
       }
     }
+    array[index] = updatedShip
+    return array
+  }
 
+  // Todo: delete destroyed ship
+  function destroyShip(arr, ship) {
+    const array = [...arr]
+    if (ship.isSunk()) {
+      array.filter((s) => s !== ship)
+    }
     return array
   }
 
   // Todo: recieveAttack()
-  function recieveAttack(arr, x, y) {
+  function recieveAttack(arr, x, y, missedArray) {
     const array = [...arr]
-    const missed = []
+    const missed = [...missedArray]
 
-    //* Match if array's coordinate matches x and y
+    // Check if any ship's coordinate matches (x, y)
     const isMatch = array.find((ship) =>
       ship.coordinates.some((coords) => coords[0] === x && coords[1] === y)
     )
-
     if (isMatch) {
       isMatch.hit()
-      return true
+      const updatedShips = destroyShip(array, isMatch)
+      return { ships: updatedShips, missed }
     }
-    if (!isMatch) {
-      missed.push([x, y])
-      return false
-    }
+    const updateMissed = [...missed, [x, y]]
+    return { ships: array, missed: updateMissed }
   }
 
-  // Todo: delete destroyed ship
   // Todo: track destroyed ship
+  function trackShips(arr) {
+    const array = [...arr]
 
-  return { createShips, assignCoordinates, recieveAttack }
+    if (array.length === 0) {
+      return true
+    }
+  }
+  function getShips(arr) {
+    return [...arr].length
+  }
+
+  return {
+    createShips,
+    assignCoordinates,
+    recieveAttack,
+    trackShips,
+    getShips,
+  }
 }
 
 export default Gameboard
