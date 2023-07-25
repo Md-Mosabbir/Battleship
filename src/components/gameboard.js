@@ -26,8 +26,8 @@ function Gameboard() {
         updatedShip.coordinates.push([x, y + c])
       }
     } else if (ship.orientation === 'horizontal') {
-      for (let c = 0; c < ship.lengthShips; c++) {
-        updatedShip.coordinates.push([x + c, y])
+      for (let d = 0; d < ship.lengthShips; d++) {
+        updatedShip.coordinates.push([x + d, y])
       }
     }
     array[index] = updatedShip
@@ -73,8 +73,22 @@ function Gameboard() {
     return [...arr].length
   }
 
+  function changeOrientation(arr, i) {
+    const array = [...arr]
+    const ship = array[i]
+
+    if (ship.orientation === 'vertical') {
+      ship.orientation = 'horizontal'
+    } else {
+      ship.orientation = 'vertical'
+    }
+
+    return array
+  }
+
   return {
     createShips,
+    changeOrientation,
     assignCoordinates,
     recieveAttack,
     trackShips,

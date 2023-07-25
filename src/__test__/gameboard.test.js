@@ -12,7 +12,7 @@ describe('Tests for assigning Coordinates and Ship intregation', () => {
 
     updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
   })
-  it('Check for assigning creation', () => {
+  it('Check for assigning coordinates', () => {
     expect(updatedShips[0].coordinates).toEqual([
       [2, 3],
       [2, 4],
@@ -40,6 +40,18 @@ describe('Tests for assigning Coordinates and Ship intregation', () => {
     ]
     expect(getShip2).toEqual(ship2Coor)
     expect(getShip4).toEqual([0, 0])
+  })
+  it('Assign a horizontal coordinate', () => {
+    const horizontalShip = gameboard.changeOrientation(updatedShips, 3)
+    const horizonCoor = gameboard.assignCoordinates(horizontalShip, 3, 6, 6)
+    const expected = horizonCoor[3].coordinates
+
+    const toBe = [
+      [6, 6],
+      [7, 6],
+      [8, 6],
+    ]
+    expect(expected).toEqual(toBe)
   })
 })
 
