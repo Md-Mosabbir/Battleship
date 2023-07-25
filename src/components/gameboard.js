@@ -35,12 +35,11 @@ function Gameboard() {
   }
 
   // Todo: delete destroyed ship
-  function destroyShip(arr, ship) {
-    const array = [...arr]
-    if (ship.isSunk()) {
-      array.filter((s) => s !== ship)
-    }
-    return array
+  function destroyShip(arr) {
+    // Use the filter function to remove sunk ships from the array
+    const updatedShips = arr.filter((ship) => !ship.isSunk())
+
+    return updatedShips
   }
 
   // Todo: recieveAttack()
@@ -54,7 +53,8 @@ function Gameboard() {
     )
     if (isMatch) {
       isMatch.hit()
-      const updatedShips = destroyShip(array, isMatch)
+
+      const updatedShips = destroyShip(array)
       return { ships: updatedShips, missed }
     }
     const updateMissed = [...missed, [x, y]]
