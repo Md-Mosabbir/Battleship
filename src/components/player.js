@@ -1,6 +1,8 @@
-function Player(name, gameboard) {
-  let currentPlayer = true
+function Player(name, gameboard, state) {
+  let currentPlayer = state
   const missedArray = []
+  // const randomCoorStorage = []
+  // const randomMovesStorage = []
   const shipsCreated = gameboard.createShips()
 
   function gameOver() {
@@ -18,6 +20,11 @@ function Player(name, gameboard) {
   function switchTurns() {
     currentPlayer = !currentPlayer
   }
+
+  // function randomCoordinates() {}
+  // function randomOrientation() {}
+  // AI method
+  // function randomMoves() {}
 
   return { switchTurns, attack, assignShips, gameOver }
 }
