@@ -24,6 +24,23 @@ describe('Tests for assigning Coordinates and Ship intregation', () => {
   it('Does not change other ships', () => {
     expect(updatedShips[1].coordinates).toEqual([0, 0])
   })
+  it('5 ships are created', () => {
+    expect(shipsCreated.length).toBe(5)
+  })
+  it('Assign multiple coordinates', () => {
+    const ship2 = gameboard.assignCoordinates(updatedShips, 2, 0, 9)
+    gameboard.assignCoordinates(shipsCreated, 1, 4, 10)
+
+    const getShip2 = ship2[2].coordinates
+    const getShip4 = ship2[4].coordinates
+    const ship2Coor = [
+      [0, 9],
+      [0, 10],
+      [0, 11],
+    ]
+    expect(getShip2).toEqual(ship2Coor)
+    expect(getShip4).toEqual([0, 0])
+  })
 })
 
 describe('Recieving attack', () => {
