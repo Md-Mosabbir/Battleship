@@ -1,4 +1,10 @@
-function Ship(name, lengthShips, hits = 0, sunk = false) {
+function Ship(
+  name,
+  lengthShips,
+  hits = 0,
+  orientation = 'vertical',
+  sunk = false
+) {
   function hit() {
     return hits++
   }
@@ -8,11 +14,18 @@ function Ship(name, lengthShips, hits = 0, sunk = false) {
     }
     return sunk
   }
+  function changeOrinetation() {
+    if (orientation === 'vertical') {
+      return (orientation = 'horizontal')
+    }
+    return (orientation = 'vertical')
+  }
   return {
-    lengthShips,
     hit,
     isSunk,
-    orientation: 'vertical',
+    changeOrinetation,
+    lengthShips,
+    orientation,
     coordinates: [0, 0],
   }
 }
