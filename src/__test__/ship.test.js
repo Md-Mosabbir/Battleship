@@ -23,4 +23,8 @@ describe('Create a Ship', () => {
     submarine.hit()
     expect(submarine.isSunk()).toEqual(true)
   })
+  it('Check for changing orientation', () => {
+    const change = submarine.changeOrinetation()
+    expect(change).toBe('horizontal')
+  })
 })
