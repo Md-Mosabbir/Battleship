@@ -96,4 +96,61 @@ describe('Recieving attack', () => {
 
     expect(result.ships.length).toBe(4)
   })
+  it('test for trackShip', () => {
+    const arr = []
+
+    const result = gameboard.trackShips(arr)
+
+    expect(result).toEqual(true)
+  })
+  it('test for getShips', () => {
+    const array = [1, 2, 3, 4]
+    const result = gameboard.getShips(array)
+    expect(result).toEqual(4)
+  })
+})
+
+describe('Play a complete game by assigning and destroying ships', () => {
+  let shipsCreated
+  let updatedShips
+  let missedArray
+  beforeEach(() => {
+    shipsCreated = gameboard.createShips()
+    updatedShips = gameboard.assignCoordinates(shipsCreated, 0, 2, 3)
+    updatedShips = gameboard.assignCoordinates(updatedShips, 1, 5, 3)
+    updatedShips = gameboard.assignCoordinates(updatedShips, 2, 7, 3)
+    updatedShips = gameboard.assignCoordinates(updatedShips, 3, 9, 3)
+    updatedShips = gameboard.assignCoordinates(updatedShips, 4, 11, 3)
+    missedArray = []
+  })
+  it('Play a complete game', () => {
+    const miss = [
+      [5, 10],
+      [5, 8],
+    ]
+    let attack = gameboard.recieveAttack(updatedShips, 2, 3, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 2, 4, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 2, 5, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 2, 6, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 2, 7, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 5, 3, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 5, 4, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 5, 5, missedArray)
+    //Misses 2 attack
+    attack = gameboard.recieveAttack(updatedShips, 5, 10, missedArray)
+    attack = gameboard.recieveAttack(updatedShips, 5, 8, attack.missed)
+
+    attack = gameboard.recieveAttack(updatedShips, 5, 6, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 7, 3, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 7, 4, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 7, 5, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 9, 3, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 9, 4, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 9, 5, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 11, 3, attack.missed)
+    attack = gameboard.recieveAttack(updatedShips, 11, 4, attack.missed)
+
+    expect(gameboard.trackShips(attack.ships)).toBe(true)
+    expect(attack.missed).toEqual(miss)
+  })
 })
