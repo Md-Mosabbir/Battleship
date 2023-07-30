@@ -21,7 +21,8 @@ function Ship(
     isSunk,
     lengthShips,
     orientation: 'vertical',
-    coordinates: [0, 0],
+    coordinates: [],
+    boundary: [],
   }
 }
 

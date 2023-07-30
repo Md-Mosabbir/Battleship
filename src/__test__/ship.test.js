@@ -13,7 +13,7 @@ describe('Create a Ship', () => {
     expect(submarine.lengthShips).toEqual(4)
     expect(submarine.isSunk()).toEqual(false)
     expect(submarine.orientation).toMatch('vertical')
-    expect(submarine.coordinates).toEqual([0, 0])
+    expect(submarine.coordinates).toEqual([])
   })
 
   it('Check wether ships gets hit', () => {
