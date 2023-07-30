@@ -22,7 +22,7 @@ describe('Tests for assigning Coordinates and Ship intregation', () => {
     ])
   })
   it('Does not change other ships', () => {
-    expect(updatedShips[1].coordinates).toEqual([0, 0])
+    expect(updatedShips[1].coordinates).toEqual([])
   })
   it('5 ships are created', () => {
     expect(shipsCreated.length).toBe(5)
@@ -39,7 +39,7 @@ describe('Tests for assigning Coordinates and Ship intregation', () => {
       [0, 11],
     ]
     expect(getShip2).toEqual(ship2Coor)
-    expect(getShip4).toEqual([0, 0])
+    expect(getShip4).toEqual([])
   })
   it('Assign a horizontal coordinate', () => {
     const horizontalShip = gameboard.changeOrientation(updatedShips, 3)
@@ -154,3 +154,5 @@ describe('Play a complete game by assigning and destroying ships', () => {
     expect(attack.missed).toEqual(miss)
   })
 })
+
+// Mock the createRandomCoordinate function to return predictable values for testing
