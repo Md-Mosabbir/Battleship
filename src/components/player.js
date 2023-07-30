@@ -20,13 +20,10 @@ function Player(name, gameboard, state) {
   function switchTurns() {
     currentPlayer = !currentPlayer
   }
-
-  // function randomCoordinates() {}
-  // function randomOrientation() {}
   // AI method
   // function randomMoves() {}
 
-  return { switchTurns, attack, assignShips, gameOver }
+  return { name, switchTurns, attack, assignShips, gameOver }
 }
 
 export default Player
