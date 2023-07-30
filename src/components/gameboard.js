@@ -68,7 +68,7 @@ function Gameboard() {
   }
 
   // Todo: assign coordinates
-  function assignCoordinates(arr, index, x, y) {
+  function setCoordinates(arr, index, x, y) {
     const array = [...arr]
     const ship = array[index]
     ship.coordinates = [] // Empty the coordinates array
@@ -127,12 +127,12 @@ function Gameboard() {
       }
     })
   }
-  function checkAssignCoordintes(arr, i, x, y) {
+  function assignCoordinates(arr, i, x, y) {
     const array = [...arr]
-    const temporaryChange = assignCoordinates(array, i, x, y)
+    const temporaryChange = setCoordinates(array, i, x, y)
 
     if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
-      return temporaryChange
+      return assignBoundary(temporaryChange)
     }
   }
   function assignOrientation(arr, i) {
@@ -140,12 +140,7 @@ function Gameboard() {
     const temporaryChange = changeOrientation(array, i)
     const ship = temporaryChange[i]
     const anchor = ship.coordinates[0]
-    const finalReturn = assignCoordinates(
-      temporaryChange,
-      i,
-      anchor[0],
-      anchor[1]
-    )
+    const finalReturn = setCoordinates(temporaryChange, i, anchor[0], anchor[1])
 
     if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
       return finalReturn
@@ -163,9 +158,9 @@ function Gameboard() {
       x = Math.floor(Math.random() * 10 + 1)
       y = Math.floor(Math.random() * 10 + 1)
 
-      isValid = !array.some((ship) =>
+      isValid = !array.some((ship) => {
         ship.boundary.some((bCoords) => bCoords[0] === x && bCoords[1] === y)
-      )
+      })
     } while (!isValid)
 
     return [x, y]
@@ -194,7 +189,7 @@ function Gameboard() {
 
     for (let i = 0; i < array.length; i++) {
       const [x, y] = createRandomCoordinate()
-      array[i] = assignCoordinates(array, i, x, y)
+      array[i] = setCoordinates(array, i, x, y)
     }
     return array
   }
@@ -240,14 +235,14 @@ function Gameboard() {
 
   return {
     createShips,
-    changeOrientation,
-    assignCoordinates, // remove it
+    assignOrientation,
+    assignCoordinates,
+    assignBoundary,
     recieveAttack,
     trackShips,
     getShips,
     randomOrientation,
     assignRandomCoordinate,
-    assignBoundary,
   }
 }
 
