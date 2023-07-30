@@ -67,8 +67,6 @@ function Gameboard() {
     return array
   }
 
-  // Todo: assign the random coordinates to the ships
-
   // Todo: assign coordinates
   function assignCoordinates(arr, index, x, y) {
     const array = [...arr]
@@ -90,6 +88,70 @@ function Gameboard() {
     return array
   }
 
+  function changeOrientation(arr, i) {
+    const array = [...arr]
+    const ship = array[i]
+
+    if (ship.orientation === 'vertical') {
+      ship.orientation = 'horizontal'
+    } else {
+      ship.orientation = 'vertical'
+    }
+
+    return array
+  }
+  function matchBoundary(arr, i) {
+    const array = [...arr]
+    const ship = array[i]
+    for (let ships = 0; ships < array.length; ships++) {
+      for (let b = 0; b < array[ships].boundary.length; b++) {
+        const coordinate = array[ships].boundary[b]
+        const found = ship.coordinates.some(
+          (itm) => itm.toString() === coordinate.toString()
+        )
+        if (found) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+  function transgress(arr, i) {
+    const array = [...arr]
+    const ship = array[i]
+    ship.coordinates.some((coords) => {
+      const x = coords[0]
+      const y = coords[1]
+      if (x >= 0 <= 10 && y >= 0 <= 10) {
+        return true
+      }
+    })
+  }
+  function checkAssignCoordintes(arr, i, x, y) {
+    const array = [...arr]
+    const temporaryChange = assignCoordinates(array, i, x, y)
+
+    if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
+      return temporaryChange
+    }
+  }
+  function assignOrientation(arr, i) {
+    const array = [...arr]
+    const temporaryChange = changeOrientation(array, i)
+    const ship = temporaryChange[i]
+    const anchor = ship.coordinates[0]
+    const finalReturn = assignCoordinates(
+      temporaryChange,
+      i,
+      anchor[0],
+      anchor[1]
+    )
+
+    if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
+      return finalReturn
+    }
+  }
+
   // Todo:  Create random coordinate that !match boundaries
   function createRandomCoordinate(arr) {
     const array = [...arr]
@@ -102,7 +164,7 @@ function Gameboard() {
       y = Math.floor(Math.random() * 10 + 1)
 
       isValid = !array.some((ship) =>
-        ship.boundary.some((coords) => coords[0] === x && coords[1] === y)
+        ship.boundary.some((bCoords) => bCoords[0] === x && bCoords[1] === y)
       )
     } while (!isValid)
 
@@ -174,19 +236,6 @@ function Gameboard() {
   }
   function getShips(arr) {
     return [...arr].length
-  }
-
-  function changeOrientation(arr, i) {
-    const array = [...arr]
-    const ship = array[i]
-
-    if (ship.orientation === 'vertical') {
-      ship.orientation = 'horizontal'
-    } else {
-      ship.orientation = 'vertical'
-    }
-
-    return array
   }
 
   return {
