@@ -6,7 +6,7 @@ beforeAll(() => {
   gameboard = Gameboard()
 })
 
-describe('Assiging coordintes and Boundaries: Random and indivitual ', () => {
+describe('Assiging coordintes and Boundaries: indivitual ', () => {
   // Todo: Moving the ships here and there while checking boundaries
   it('Creates five ships', () => {
     const ships = gameboard.createShips()
@@ -19,5 +19,32 @@ describe('Assiging coordintes and Boundaries: Random and indivitual ', () => {
       expect(ship.boundary).toEqual([])
     })
   })
-  it('Giving random Coorinates to Ships', () => {})
+
+  it('Assign Coordinates on a ship', () => {
+    const ship = [
+      {
+        name: 'Submarine ',
+        coordinates: [],
+        lengthShips: 2,
+        boundary: [],
+        orientation: 'vertical',
+      },
+      {
+        name: 'Speed-Boat',
+        coordinates: [[7, 7]],
+        lengthShips: 1,
+        boundary: [],
+        orientation: 'vertical',
+      },
+    ]
+
+    const assign = gameboard.assignCoordinates(ship, 0, 1, 5)
+
+    const coor = [
+      [1, 5],
+      [1, 6],
+    ]
+    expect(assign[0].coordinates).toEqual(coor)
+    expect(assign[1].coordinates).toEqual([[7, 7]])
+  })
 })

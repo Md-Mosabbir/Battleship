@@ -27,8 +27,8 @@ function Gameboard() {
       if (ships.orientation === 'vertical') {
         const bottom = [ships.coordinates[0][0], ships.coordinates[0][1] - 1]
         const top = [
-          ships.coordinates[ships.lengthShip - 1][0],
-          ships.coordinates[ships.lengthShip - 1][1] + 1,
+          ships.coordinates[ships.lengthShips - 1][0],
+          ships.coordinates[ships.lengthShips - 1][1] + 1,
         ]
         const cornerB1 = [bottom[0] - 1, bottom[1]]
         const cornerB2 = [bottom[0] + 1, bottom[1]]
@@ -46,8 +46,8 @@ function Gameboard() {
       } else if (ships.orientation === 'horizontal') {
         const left = [ships.coordinates[0][0] - 1, ships.coordinates[0][1]]
         const right = [
-          ships.coordinates[ships.lengthShip - 1][0] + 1,
-          ships.coordinates[ships.lengthShip - 1][1],
+          ships.coordinates[ships.lengthShips - 1][0] + 1,
+          ships.coordinates[ships.lengthShips - 1][1],
         ]
         const cornerB1 = [left[0], left[1] - 1]
         const cornerB2 = [left[0], left[1] + 1]
@@ -72,8 +72,8 @@ function Gameboard() {
     const array = [...arr]
     const ship = array[index]
     ship.coordinates = [] // Empty the coordinates array
-
-    const updatedShip = { ...ship, coordinates: [] }
+    ship.boundary = []
+    const updatedShip = { ...ship, coordinates: [], boundary: [] }
 
     if (ship.orientation === 'vertical') {
       for (let c = 0; c < ship.lengthShips; c++) {
@@ -119,20 +119,23 @@ function Gameboard() {
   function transgress(arr, i) {
     const array = [...arr]
     const ship = array[i]
-    ship.coordinates.some((coords) => {
+    return ship.coordinates.some((coords) => {
       const x = coords[0]
       const y = coords[1]
-      if (x >= 0 <= 10 && y >= 0 <= 10) {
-        return true
-      }
+      return x < 0 || x > 10 || y < 0 || y > 10
     })
   }
+
   function assignCoordinates(arr, i, x, y) {
     const array = [...arr]
     const temporaryChange = setCoordinates(array, i, x, y)
 
-    if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
-      return assignBoundary(temporaryChange)
+    if (
+      matchBoundary(temporaryChange, i) === false &&
+      transgress(temporaryChange, i) === false
+    ) {
+      const boundary = assignBoundary(temporaryChange)
+      return boundary
     }
   }
   function assignOrientation(arr, i) {
@@ -142,7 +145,10 @@ function Gameboard() {
     const anchor = ship.coordinates[0]
     const finalReturn = setCoordinates(temporaryChange, i, anchor[0], anchor[1])
 
-    if (!matchBoundary(temporaryChange, i) && !transgress(temporaryChange, i)) {
+    if (
+      matchBoundary(temporaryChange, i) === false &&
+      transgress(temporaryChange, i) === false
+    ) {
       return finalReturn
     }
   }
@@ -201,7 +207,12 @@ function Gameboard() {
 
     return updatedShips
   }
-
+  // Todo: Missed attack manager
+  function missedAttack(arr, x, y) {
+    const array = [...arr]
+    array.push([x, y])
+    return array
+  }
   // Todo: recieveAttack()
   function recieveAttack(arr, x, y, missedArray) {
     const array = [...arr]
@@ -215,10 +226,10 @@ function Gameboard() {
       isMatch.hit()
 
       const updatedShips = destroyShip(array)
-      return { ships: updatedShips, missed }
+      return updatedShips
     }
-    const updateMissed = [...missed, [x, y]]
-    return { ships: array, missed: updateMissed }
+    missedAttack(missed, x, y)
+    return array
   }
 
   // Todo: track destroyed ship
@@ -237,7 +248,6 @@ function Gameboard() {
     createShips,
     assignOrientation,
     assignCoordinates,
-    assignBoundary,
     recieveAttack,
     trackShips,
     getShips,
