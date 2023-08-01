@@ -94,7 +94,7 @@ function Gameboard() {
 
     if (ship.orientation === 'vertical') {
       ship.orientation = 'horizontal'
-    } else {
+    } else if (ship.orientation === 'horizontal') {
       ship.orientation = 'vertical'
     }
 
@@ -137,13 +137,19 @@ function Gameboard() {
       const boundary = assignBoundary(temporaryChange)
       return boundary
     }
+    return array
   }
   function assignOrientation(arr, i) {
     const array = [...arr]
     const temporaryChange = changeOrientation(array, i)
     const ship = temporaryChange[i]
     const anchor = ship.coordinates[0]
-    const finalReturn = setCoordinates(temporaryChange, i, anchor[0], anchor[1])
+    const finalReturn = assignCoordinates(
+      temporaryChange,
+      i,
+      anchor[0],
+      anchor[1]
+    )
 
     if (
       matchBoundary(temporaryChange, i) === false &&
@@ -151,6 +157,7 @@ function Gameboard() {
     ) {
       return finalReturn
     }
+    return array
   }
 
   // Todo:  Create random coordinate that !match boundaries
