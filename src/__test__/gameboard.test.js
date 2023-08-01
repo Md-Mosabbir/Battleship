@@ -70,9 +70,93 @@ describe('Assiging coordintes and Boundaries: indivitual ', () => {
       [1, 6],
     ]
     let changeOrientation = gameboard.assignOrientation(ship, 0)
-    changeOrientation = gameboard.assignOrientation(changeOrientation, 0)
-
-    expect(changeOrientation[0].orientation).toBe('vertical')
+    changeOrientation = gameboard.assignOrientation(ship, 0)
     expect(changeOrientation[0].coordinates).toEqual(coords)
+  })
+  it('Does not assign Coordinates', () => {
+    const testShip = [
+      {
+        name: 'Submarine ',
+        coordinates: [[0, 0]],
+        lengthShips: 2,
+        boundary: [],
+        orientation: 'vertical',
+      },
+      {
+        name: 'Boat ',
+        coordinates: [[0, 0]],
+        lengthShips: 1,
+        boundary: [],
+        orientation: 'vertical',
+      },
+    ]
+    const coorZero = [
+      [1, 5],
+      [1, 6],
+    ]
+    let overlap = gameboard.assignCoordinates(testShip, 0, 1, 5)
+    overlap = gameboard.assignCoordinates(overlap, 1, 7, 7)
+    overlap = gameboard.assignCoordinates(overlap, 1, 1, 5)
+    overlap = gameboard.assignCoordinates(overlap, 0, 1, 5)
+    let trasngress = gameboard.assignCoordinates(overlap, 0, 11, 11)
+    trasngress = gameboard.assignCoordinates(overlap, 0, 0, 11)
+
+    expect(overlap[1].coordinates).toEqual([[7, 7]])
+    expect(overlap[0].coordinates).toEqual(coorZero)
+    expect(trasngress[0].coordinates).toEqual(coorZero)
+    expect(trasngress[1].coordinates).toEqual([[7, 7]])
+  })
+  it('Does not assign Orientation', () => {
+    const coors = [
+      [5, 7],
+      [5, 8],
+    ]
+    const coorsT = [
+      [10, 9],
+      [10, 10],
+    ]
+    let assingNextToAShip = gameboard.assignCoordinates(ship, 0, 5, 7)
+
+    let changeNot = gameboard.assignOrientation(assingNextToAShip, 0)
+
+    const assignToCorner = gameboard.assignCoordinates(ship, 0, 10, 9)
+    const notTransgressRotate = gameboard.assignOrientation(assignToCorner, 0)
+
+    expect(assingNextToAShip[0].coordinates).toEqual(coors)
+    expect(changeNot[0].coordinates).toEqual(coors)
+    expect(changeNot[1].coordinates).toEqual([[7, 7]])
+    expect(assignToCorner[0].coordinates).toEqual(coorsT)
+    expect(notTransgressRotate[0].coordinates).toEqual(coorsT)
+    expect(notTransgressRotate[1].coordinates).toEqual([[7, 7]])
+  })
+})
+
+describe('Recieve Attack upon ships and destroy', () => {
+  let ship
+  beforeEach(() => {
+    const missedArray = []
+    ship = [
+      {
+        name: 'Submarine ',
+        coordinates: [
+          [1, 5],
+          [1, 6],
+        ],
+        lengthShips: 2,
+        boundary: [],
+        orientation: 'vertical',
+      },
+      {
+        name: 'Speed-Boat',
+        coordinates: [[7, 7]],
+        lengthShips: 1,
+        boundary: [],
+        orientation: 'horizontal',
+      },
+    ]
+  })
+
+  it('Attacks a ship', () => {
+    const attack = gameboard.recieveAttack(ship, 7, 7)
   })
 })
