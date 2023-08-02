@@ -167,9 +167,10 @@ function Gameboard() {
     let isValid
 
     do {
-      x = Math.floor(Math.random() * 10 + 1)
-      y = Math.floor(Math.random() * 10 + 1)
+      x = Math.floor(Math.random() * 11)
+      y = Math.floor(Math.random() * 11)
 
+      // eslint-disable-next-line arrow-body-style, no-loop-func
       isValid = !array.some((ship) => {
         return ship.boundary.some(
           (bCoords) => bCoords[0] === x && bCoords[1] === y
@@ -232,27 +233,26 @@ function Gameboard() {
     return updatedShips
   }
   // Todo: Missed attack manager
-  function missedAttack(arr, x, y) {
-    const array = [...arr]
-    array.push([x, y])
-    return array
-  }
+
   // Todo: recieveAttack()
   function recieveAttack(arr, x, y, missedArray) {
     const array = [...arr]
-    const missed = [...missedArray]
 
     // Check if any ship's coordinate matches (x, y)
     const isMatch = array.find((ship) =>
       ship.coordinates.some((coords) => coords[0] === x && coords[1] === y)
     )
-    if (isMatch) {
-      isMatch.hit()
 
-      const updatedShips = destroyShip(array)
+    if (isMatch) {
+      // Assuming hit() marks the ship as hit
+      isMatch.hit()
+      const updatedShips = destroyShip(array, isMatch) // Assuming destroyShip() removes the destroyed ship
       return updatedShips
     }
-    missedAttack(missed, x, y)
+
+    // If there is no match, add the missed attack coordinates to the missedArray
+    missedArray.push([x, y])
+
     return array
   }
 
