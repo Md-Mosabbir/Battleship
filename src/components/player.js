@@ -1,8 +1,8 @@
 function Player(name, gameboard, state) {
   let currentPlayer = state
   const missedArray = []
-  // const randomCoorStorage = []
-  // const randomMovesStorage = []
+
+  const randomMovesStorage = []
   const shipsCreated = gameboard.createShips()
 
   function gameOver() {
@@ -21,9 +21,39 @@ function Player(name, gameboard, state) {
     currentPlayer = !currentPlayer
   }
   // AI method
-  // function randomMoves() {}
 
-  return { name, switchTurns, attack, assignShips, gameOver }
+  function randomMoves() {
+    let x
+    let y
+    let isValid
+
+    do {
+      x = Math.floor(Math.random() * 11)
+      y = Math.floor(Math.random() * 11)
+
+      // eslint-disable-next-line arrow-body-style, no-loop-func
+      isValid = !randomMovesStorage.some((ship) => {
+        ship[0] === x && ship[1] === y
+      })
+    } while (!isValid)
+
+    return [x, y]
+  }
+
+  function automatedRandomMoves() {
+    const [x, y] = randomMoves()
+    attack(x, y)
+    randomMovesStorage.push([x, y])
+  }
+
+  return {
+    name,
+    switchTurns,
+    attack,
+    assignShips,
+    gameOver,
+    automatedRandomMoves,
+  }
 }
 
 export default Player
