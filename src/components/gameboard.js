@@ -165,13 +165,15 @@ function Gameboard() {
     let x
     let y
     let isValid
-    //* Make a way to check wether the number generated matches with the boundary property
+
     do {
       x = Math.floor(Math.random() * 10 + 1)
       y = Math.floor(Math.random() * 10 + 1)
 
       isValid = !array.some((ship) => {
-        ship.boundary.some((bCoords) => bCoords[0] === x && bCoords[1] === y)
+        return ship.boundary.some(
+          (bCoords) => bCoords[0] === x && bCoords[1] === y
+        )
       })
     } while (!isValid)
 
@@ -195,15 +197,31 @@ function Gameboard() {
   }
 
   // Todo: Function to assign random coordinates to all ships
-  function assignRandomCoordinate(arr) {
-    // assign Coordinates but make index a loop and x and y random
-    const array = [...arr]
 
-    for (let i = 0; i < array.length; i++) {
-      const [x, y] = createRandomCoordinate()
-      array[i] = setCoordinates(array, i, x, y)
-    }
+  function setRandomCoordinates(arr) {
+    const array = arr.map((ship) => {
+      const updatedShip = { ...ship, coordinates: [], boundary: [] }
+      const [x, y] = createRandomCoordinate(arr)
+      if (ship.orientation === 'vertical') {
+        for (let c = 0; c < ship.lengthShips; c++) {
+          updatedShip.coordinates.push([x, y + c])
+        }
+      } else if (ship.orientation === 'horizontal') {
+        for (let d = 0; d < ship.lengthShips; d++) {
+          updatedShip.coordinates.push([x + d, y])
+        }
+      }
+      return updatedShip
+    })
+
     return array
+  }
+
+  function assignRandomCoordinates(arr) {
+    const setOrientation = randomOrientation(arr)
+    const setCoor = setRandomCoordinates(setOrientation)
+    const setBoundary = assignBoundary(setCoor)
+    return setBoundary
   }
 
   // Todo: delete destroyed ship
@@ -257,8 +275,7 @@ function Gameboard() {
     recieveAttack,
     trackShips,
     getShips,
-    randomOrientation,
-    assignRandomCoordinate,
+    assignRandomCoordinates,
   }
 }
 

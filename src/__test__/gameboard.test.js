@@ -131,32 +131,52 @@ describe('Assiging coordintes and Boundaries: indivitual ', () => {
   })
 })
 
-describe('Recieve Attack upon ships and destroy', () => {
-  let ship
-  beforeEach(() => {
-    const missedArray = []
-    ship = [
+describe('Test random numbers', () => {
+  let mockMathRandom
+  it('assigns random coords', () => {
+    const ship = [
       {
         name: 'Submarine ',
-        coordinates: [
-          [1, 5],
-          [1, 6],
-        ],
+        coordinates: [],
         lengthShips: 2,
         boundary: [],
         orientation: 'vertical',
       },
       {
         name: 'Speed-Boat',
-        coordinates: [[7, 7]],
+        coordinates: [],
         lengthShips: 1,
         boundary: [],
         orientation: 'horizontal',
       },
     ]
-  })
+    mockMathRandom = jest
+      .spyOn(global.Math, 'random')
+      .mockReturnValueOnce(0.8)
+      .mockReturnValueOnce(0.8)
+      .mockReturnValueOnce(0.8)
+      .mockReturnValueOnce(0.9)
+      .mockReturnValueOnce(0.6)
+      .mockReturnValueOnce(0.7)
 
-  it('Attacks a ship', () => {
-    const attack = gameboard.recieveAttack(ship, 7, 7)
+    const assignCoordinatesRandom = gameboard.assignRandomCoordinates(ship)
+
+    // length
+    expect(assignCoordinatesRandom[0].coordinates).toHaveLength(2)
+    expect(assignCoordinatesRandom[1].coordinates).toHaveLength(1)
+    expect(assignCoordinatesRandom[0].boundary).toHaveLength(12)
+    expect(assignCoordinatesRandom[1].boundary).toHaveLength(9)
+
+    // x and y
+
+    expect(assignCoordinatesRandom[0].coordinates).toEqual([
+      [9, 10],
+      [10, 10],
+    ])
+
+    expect(assignCoordinatesRandom[1].coordinates).toEqual([[7, 8]])
+  })
+  afterEach(() => {
+    mockMathRandom.mockRestore()
   })
 })
