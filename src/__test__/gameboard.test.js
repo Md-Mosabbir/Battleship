@@ -249,4 +249,13 @@ describe('Attack on ship', () => {
       [0, 0],
     ])
   })
+  it('Destroys all ships', () => {
+    let attack = gameboard.recieveAttack(array, 1, 2, missedArray)
+    attack = gameboard.recieveAttack(array, 5, 6, missedArray)
+    attack = gameboard.recieveAttack(array, 5, 5, missedArray)
+
+    expect(missedArray).toHaveLength(0)
+    expect(attack).toHaveLength(0)
+    expect(gameboard.trackShips(attack)).toBeTruthy()
+  })
 })
