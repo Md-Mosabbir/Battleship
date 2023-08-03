@@ -5,30 +5,49 @@
   outline: none;
   list-style: none;
 }
+:root {
+  --neutral-black: #000;
+  --neutral-white: #fff;
+}
 
-nav {
-  width: 100%;
+.board-container {
   display: flex;
   justify-content: space-around;
-
-  padding: 2rem;
-  flex: 50%;
-  border-bottom: 1px solid black;
-  margin-bottom: 2.5rem;
-}
-nav div {
-  width: 100%;
-  padding: 0.8rem;
-  text-align: center;
-  border-radius: 0.5rem;
 }
 
-.buttons {
+.all-letters {
   display: flex;
-  gap: 6rem;
-  justify-content: center;
+  gap: 2px;
+  padding-left: 20px;
 }
-
-.active {
-  background-color: pink;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 2px;
+}
+.letter {
+  width: 30px;
+  height: 25px;
+  text-align: center;
+}
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border: 1px solid #999;
+}
+.number-and-grid {
+  display: flex;
+}
+.all-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.number {
+  height: 30px;
+  width: 20px;
+  padding: 7px 0;
+  text-align: center;
 }
