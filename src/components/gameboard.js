@@ -5,10 +5,10 @@ function Gameboard() {
 
   function createShips() {
     const ships = []
-    ships.push(Ship('Aircraft Carrier', 5))
+    ships.push(Ship('Aircraft-Carrier', 5))
     ships.push(Ship('Battleship', 4))
-    ships.push(Ship('Submarine', 3))
-    ships.push(Ship('Cruiser', 3))
+    ships.push(Ship('Submarine-1', 3))
+    ships.push(Ship('Submarine-2', 3))
     ships.push(Ship('Destroyer', 2))
 
     return ships
