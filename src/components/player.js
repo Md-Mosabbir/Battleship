@@ -11,15 +11,13 @@ function Player(name, gameboard, state) {
     }
   }
   function attack(x, y) {
+    currentPlayer = !currentPlayer
     gameboard.recieveAttack(shipsCreated, x, y, missedArray)
   }
   function assignShips(index, x, y) {
     gameboard.assignCoordinates(shipsCreated, index, x, y)
   }
 
-  function switchTurns() {
-    currentPlayer = !currentPlayer
-  }
   // AI method
 
   function randomMoves() {
@@ -48,7 +46,6 @@ function Player(name, gameboard, state) {
 
   return {
     name,
-    switchTurns,
     attack,
     assignShips,
     gameOver,

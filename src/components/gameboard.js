@@ -167,11 +167,11 @@ function Gameboard() {
     let isValid
 
     do {
-      x = Math.floor(Math.random() * 11)
-      y = Math.floor(Math.random() * 11)
+      x = Math.floor(Math.random() * 10)
+      y = Math.floor(Math.random() * 10)
 
       // eslint-disable-next-line arrow-body-style, no-loop-func
-      isValid = !array.some((ship) => {
+      isValid = array.some((ship) => {
         return ship.boundary.some(
           (bCoords) => bCoords[0] === x && bCoords[1] === y
         )
@@ -220,9 +220,9 @@ function Gameboard() {
 
   function assignRandomCoordinates(arr) {
     const setOrientation = randomOrientation(arr)
-    const setCoor = setRandomCoordinates(setOrientation)
-    const setBoundary = assignBoundary(setCoor)
-    return setBoundary
+    const setCoorAndBoundary = setRandomCoordinates(setOrientation)
+
+    return setCoorAndBoundary
   }
 
   // Todo: delete destroyed ship
