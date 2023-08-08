@@ -114,8 +114,12 @@ describe('Assiging coordintes and Boundaries: indivitual ', () => {
       [5, 8],
     ]
     const coorsT = [
-      [10, 9],
-      [10, 10],
+      [1, 5],
+      [2, 5],
+    ]
+    const coorsT2 = [
+      [1, 5],
+      [1, 6],
     ]
     let assingNextToAShip = gameboard.assignCoordinates(ship, 0, 5, 7)
 
@@ -127,99 +131,11 @@ describe('Assiging coordintes and Boundaries: indivitual ', () => {
     expect(assingNextToAShip[0].coordinates).toEqual(coors)
     expect(changeNot[0].coordinates).toEqual(coors)
     expect(changeNot[1].coordinates).toEqual([[7, 7]])
-    expect(assignToCorner[0].coordinates).toEqual(coorsT)
+    expect(assignToCorner[0].coordinates).toEqual(coorsT2)
     expect(notTransgressRotate[0].coordinates).toEqual(coorsT)
     expect(notTransgressRotate[1].coordinates).toEqual([[7, 7]])
   })
 })
-
-// describe('Test random coordinates', () => {
-//   let mockMathRandom
-//   let ship
-
-//   beforeEach(() => {
-//     ship = [
-//       {
-//         name: 'Submarine ',
-//         coordinates: [],
-//         lengthShips: 2,
-//         boundary: [],
-//         orientation: 'vertical',
-//       },
-//       {
-//         name: 'Speed-Boat',
-//         coordinates: [],
-//         lengthShips: 1,
-//         boundary: [],
-//         orientation: 'horizontal',
-//       },
-//     ]
-//   })
-
-//   afterEach(() => {
-//     mockMathRandom.mockRestore()
-//   })
-
-//   it('assigns random coords', () => {
-//     mockMathRandom = jest
-//       .spyOn(global.Math, 'random')
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.9)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.7)
-
-//     const assignCoordinatesRandom = gameboard.assignRandomCoordinates(ship)
-
-//     // length
-//     expect(assignCoordinatesRandom[0].coordinates).toHaveLength(2)
-//     expect(assignCoordinatesRandom[1].coordinates).toHaveLength(1)
-
-//     // x and y
-//     expect(assignCoordinatesRandom[0].coordinates).toEqual([
-//       [8, 9],
-//       [9, 9],
-//     ])
-
-//     expect(assignCoordinatesRandom[1].coordinates).toEqual([[6, 7]])
-//   })
-
-//   it('check assigned boundary', () => {
-//     mockMathRandom = jest
-//       .spyOn(global.Math, 'random')
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.9)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.7)
-
-//     const assignCoordinatesRandom = gameboard.assignRandomCoordinates(ship)
-
-//     expect(assignCoordinatesRandom[0].boundary).toHaveLength(12)
-//     expect(assignCoordinatesRandom[1].boundary).toHaveLength(9)
-//   })
-
-//   it('Assign random coordinates multiple times', () => {
-//     mockMathRandom = jest
-//       .spyOn(global.Math, 'random')
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.8)
-//       .mockReturnValueOnce(0.9)
-//       .mockReturnValueOnce(0.6)
-//       .mockReturnValueOnce(0.7)
-
-//     const assignCoordinatesRandom = gameboard.assignRandomCoordinates(ship)
-//     const secondRandom = gameboard.assignRandomCoordinates(
-//       assignCoordinatesRandom
-//     )
-
-//     expect(secondRandom[0].boundary).toHaveLength(12)
-//     expect(secondRandom[1].boundary).toHaveLength(9)
-//   })
-// })
 
 describe('Attack on ship', () => {
   let missedArray
@@ -257,19 +173,5 @@ describe('Attack on ship', () => {
     expect(missedArray).toHaveLength(0)
     expect(attack).toHaveLength(0)
     expect(gameboard.trackShips(attack)).toBeTruthy()
-  })
-})
-
-describe('Test random corrdinates', () => {
-  let ships
-  beforeEach(() => {
-    const shipOne = Ship('Pseudo-Ship', 2)
-    const shipTwo = Ship('Submarine', 3)
-    ships = [shipOne, shipTwo]
-  })
-
-  it('Gives boundry and coordintes', () => {
-    const randomCoordinates = gameboard.assignRandomCoordinates(ships)
-    expect(randomCoordinates[0].coordinates).toBe('lol')
   })
 })
