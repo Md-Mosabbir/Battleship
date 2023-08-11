@@ -137,10 +137,10 @@ function Gameboard() {
   }
 
   function assignCoordinates(arr, i, x, y) {
-    const temporaryChange = setCoordinates([...arr], i, x, y)
+    const temporaryChange = setCoordinates(arr, i, x, y)
 
     if (
-      matchBoundary(temporaryChange, i) === false ||
+      matchBoundary(temporaryChange, i) === false &&
       transgress(temporaryChange, i) === false
     ) {
       const boundary = assignBoundary(temporaryChange, i)
@@ -162,15 +162,12 @@ function Gameboard() {
       anchor[1]
     )
 
-    if (
-      matchBoundary(finalReturn, i) === false &&
-      transgress(finalReturn, i) === false
-    ) {
-      return finalReturn // Return the modified array with coordinates assigned and conditions met
+    if (temporaryChange[i].coordinates === finalReturn[i].coordinates) {
+      const returnShip = changeOrientation(temporaryChange, i)
+      return returnShip // Return the modified array with coordinates assigned and conditions met
     }
 
-    const returnShip = changeOrientation(temporaryChange, i)
-    return returnShip
+    return finalReturn
 
     // Return the original array when conditions are not met
   }

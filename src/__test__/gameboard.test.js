@@ -60,3 +60,55 @@ describe('Change Orientaion of ships', () => {
     ])
   })
 })
+
+describe('Assign Coordinates to ship', () => {
+  it('Assigns coordinates to 5th ship', () => {
+    const destroyer = gameboard.assignCoordinates(testingShips, 4, 4, 5)
+
+    const coords = [
+      [4, 5],
+      [4, 6],
+    ]
+
+    expect(destroyer[4].coordinates).toEqual(coords)
+    expect(destroyer[4].boundary).toHaveLength(12)
+    expect(destroyer[1].coordinates).toEqual([])
+  })
+  it('Assigns coordinates to two ships', () => {
+    let duo = gameboard.assignCoordinates(testingShips, 4, 6, 7)
+    duo = gameboard.assignCoordinates(duo, 3, 1, 6)
+    const coordsFifth = [
+      [6, 7],
+      [6, 8],
+    ]
+    const coordsFourth = [
+      [1, 6],
+      [1, 7],
+      [1, 8],
+    ]
+
+    expect(duo[4].coordinates).toEqual(coordsFifth)
+
+    expect(duo[3].coordinates).toEqual(coordsFourth)
+    expect(duo[1].coordinates).toEqual([])
+  })
+
+  it('Does not assign coordinates to ships due to TRANSGRESSION', () => {
+    const transgress = gameboard.assignCoordinates(testingShips, 0, 5, 9)
+    expect(transgress[0].coordinates).toEqual([])
+
+    let twoTurns = gameboard.assignCoordinates(testingShips, 0, 1, 1)
+
+    twoTurns = gameboard.assignCoordinates(twoTurns, 0, 9, 9)
+
+    const coors = [
+      [1, 1],
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [1, 5],
+    ]
+
+    expect(twoTurns[0].coordinates).toEqual(coors)
+  })
+})
