@@ -101,21 +101,31 @@ function Gameboard() {
     return array
   }
   function matchBoundary(arr, i) {
-    const array = [...arr]
-    const ship = array[i]
-    for (let ships = 0; ships < array.length; ships++) {
-      for (let b = 0; b < array[ships].boundary.length; b++) {
-        const coordinate = array[ships].boundary[b]
-        const found = ship.coordinates.some(
-          (itm) => itm.toString() === coordinate.toString()
-        )
-        if (found) {
-          return true
+    const ship = arr[i]
+
+    for (let ships = 0; ships < arr.length; ships++) {
+      if (ships !== i) {
+        // Avoid checking the same ship
+        const otherShip = arr[ships]
+
+        for (let b = 0; b < otherShip.boundary.length; b++) {
+          const coordinate = otherShip.boundary[b]
+
+          // Check if any of the ship's coordinates match the boundary
+          const found = ship.coordinates.some(
+            (itm) => itm.toString() === coordinate.toString()
+          )
+
+          if (found) {
+            return true
+          }
         }
       }
     }
+
     return false
   }
+
   function transgress(arr, i) {
     const array = [...arr]
     const ship = array[i]
@@ -130,12 +140,13 @@ function Gameboard() {
     const temporaryChange = setCoordinates([...arr], i, x, y)
 
     if (
-      matchBoundary(temporaryChange, i) === false &&
+      matchBoundary(temporaryChange, i) === false ||
       transgress(temporaryChange, i) === false
     ) {
       const boundary = assignBoundary(temporaryChange, i)
       return boundary
     }
+
     return arr // Return the original array when conditions are met
   }
 
@@ -152,12 +163,16 @@ function Gameboard() {
     )
 
     if (
-      matchBoundary(temporaryChange, i) === false &&
-      transgress(temporaryChange, i) === false
+      matchBoundary(finalReturn, i) === false &&
+      transgress(finalReturn, i) === false
     ) {
-      return finalReturn
+      return finalReturn // Return the modified array with coordinates assigned and conditions met
     }
-    return arr
+
+    const returnShip = changeOrientation(temporaryChange, i)
+    return returnShip
+
+    // Return the original array when conditions are not met
   }
 
   // Todo:  Create random coordinate that !match boundaries
@@ -165,9 +180,12 @@ function Gameboard() {
   // Todo: random Orientation
 
   // Function to get a random orientation
-
   function randomOrientation(arr) {
-    const array = arr.map((ship) => ({ ...ship })) // Create a shallow copy
+    const array = arr.map((ship) => ({
+      ...ship,
+      boundary: [],
+      coordinates: [],
+    })) // Reset boundary for each ship
     const orientations = ['vertical', 'horizontal']
 
     for (let i = 0; i < array.length; i++) {
@@ -250,11 +268,28 @@ function Gameboard() {
   }
 
   function assignRandomCoordinates(arr) {
-    arr = randomOrientation(arr)
-    for (let index = 0; index < 5; index++) {
-      const [x, y] = createRandomCoordinate(arr, index)
-      arr = assignCoordinates(arr, index, x, y) // Update the array with modified coordinates
+    let isValid = false
+
+    while (!isValid) {
+      let newArray = randomOrientation([...arr])
+
+      for (let index = 0; index < 5; index++) {
+        const [x, y] = createRandomCoordinate(newArray, index)
+        newArray = assignCoordinates(newArray, index, x, y)
+
+        if (matchBoundary(newArray, index) || transgress(newArray, index)) {
+          isValid = false
+          break
+        } else {
+          isValid = true
+        }
+      }
+
+      if (isValid) {
+        arr = newArray
+      }
     }
+
     return arr // Return the modified array after assigning coordinates to all ships
   }
 
@@ -266,12 +301,6 @@ function Gameboard() {
     trackShips,
     getShips,
     assignRandomCoordinates,
-    createRandomCoordinate,
   }
 }
-const g = Gameboard()
-const l = g.createShips()
-
-const set = g.assignRandomCoordinates(l)
-
 export default Gameboard
