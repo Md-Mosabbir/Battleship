@@ -112,3 +112,84 @@ describe('Assign Coordinates to ship', () => {
     expect(twoTurns[0].coordinates).toEqual(coors)
   })
 })
+
+describe('Assign Random coordinates', () => {
+  it('assigns random coordinates with boundary', () => {
+    const random = gameboard.assignRandomCoordinates(testingShips)
+
+    random.forEach((ships) => {
+      const coordinates = ships.coordinates
+      const boundary = ships.boundary
+      expect(coordinates).not.toBe([])
+      expect(boundary).not.toBe([])
+
+      coordinates.forEach((coords) => {
+        const x = coords[0]
+        const y = coords[1]
+
+        expect(x).toBeLessThanOrEqual(9)
+        expect(x).toBeGreaterThanOrEqual(0)
+        expect(y).toBeLessThanOrEqual(9)
+        expect(y).toBeGreaterThanOrEqual(0)
+      })
+    })
+  })
+})
+
+describe('Attacks and destroyes ship', () => {
+  let missedArray
+  beforeEach(() => {
+    missedArray = []
+  })
+
+  it('Attacks ship', () => {
+    const assignCoor = gameboard.assignCoordinates(testingShips, 4, 2, 2)
+
+    const attack = gameboard.recieveAttack(assignCoor, 2, 2, missedArray)
+
+    const destroy = gameboard.recieveAttack(attack, 2, 3, missedArray)
+
+    expect(destroy).toHaveLength(4)
+    expect(missedArray).toEqual([])
+  })
+
+  it('Misses an attack', () => {
+    const assign = gameboard.assignCoordinates(testingShips, 3, 1, 1)
+
+    const miss = gameboard.recieveAttack(assign, 1, 4, missedArray)
+
+    expect(missedArray).toEqual([[1, 4]])
+  })
+
+  it('Misses multiple attack and then attacks', () => {
+    const assign = gameboard.assignCoordinates(testingShips, 4, 1, 1)
+
+    let miss = gameboard.recieveAttack(assign, 5, 5, missedArray)
+
+    miss = gameboard.recieveAttack(miss, 4, 4, missedArray)
+    miss = gameboard.recieveAttack(miss, 1, 1, missedArray)
+    miss = gameboard.recieveAttack(miss, 1, 2, missedArray)
+
+    expect(missedArray).toEqual([
+      [5, 5],
+      [4, 4],
+    ])
+
+    expect(miss).toHaveLength(4)
+  })
+})
+
+describe('Track and get Ships', () => {
+  it('Track the number of ships', () => {
+    const track = gameboard.trackShips(testingShips)
+    const empty = []
+    const secondTrack = gameboard.trackShips(empty)
+    expect(track).toBeFalsy()
+    expect(secondTrack).toBeTruthy()
+  })
+  it('Get ships length', () => {
+    const ships = gameboard.getShips(testingShips)
+
+    expect(ships).toBe(5)
+  })
+})

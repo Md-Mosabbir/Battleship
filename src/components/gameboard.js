@@ -231,6 +231,7 @@ function Gameboard() {
     if (array.length === 0) {
       return true
     }
+    return false
   }
   function getShips(arr) {
     return [...arr].length
@@ -254,6 +255,7 @@ function Gameboard() {
         y = Math.floor(Math.random() * 10)
       }
 
+      // eslint-disable-next-line no-loop-func
       isMatchBoundary = array.some((ships) =>
         ships.boundary.some(
           (boundary) => boundary[0] === x && boundary[1] === y
@@ -270,7 +272,7 @@ function Gameboard() {
     while (!isValid) {
       let newArray = randomOrientation([...arr])
 
-      for (let index = 0; index < 5; index++) {
+      for (let index = 0; index < arr.length; index++) {
         const [x, y] = createRandomCoordinate(newArray, index)
         newArray = assignCoordinates(newArray, index, x, y)
 
@@ -294,10 +296,10 @@ function Gameboard() {
     createShips,
     assignOrientation,
     assignCoordinates,
+    assignRandomCoordinates,
     recieveAttack,
     trackShips,
     getShips,
-    assignRandomCoordinates,
   }
 }
 export default Gameboard
