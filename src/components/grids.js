@@ -35,6 +35,8 @@ function createGrid(idOfBoard) {
   // grid
   const grid = document.createElement('div')
   grid.classList.add('grid')
+  grid.id = `${idOfBoard}-grid`
+  grid.style.position = 'relative'
 
   for (let y = 9; y > -1; y--) {
     for (let x = 0; x < 10; x++) {

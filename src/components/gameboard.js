@@ -284,8 +284,17 @@ function Gameboard() {
         }
       }
 
+      // Check if any ship in newArray has an empty array of coordinates
       if (isValid) {
-        arr = newArray
+        const hasEmptyCoordinates = newArray.some(
+          (ship) => ship.coordinates.length === 0
+        )
+        if (hasEmptyCoordinates) {
+          isValid = false
+          continue // Continue the while loop
+        } else {
+          arr = newArray
+        }
       }
     }
 

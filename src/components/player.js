@@ -1,21 +1,19 @@
-function Player(name, gameboard, state) {
-  let currentPlayer = state
+function Player(name, gameboard, enemyGameboard, state) {
   const missedArray = []
 
   const randomMovesStorage = []
-  const shipsCreated = gameboard.createShips()
 
   function gameOver() {
-    if (gameboard.trackShips(shipsCreated)) {
-      return true
-    }
+    enemyGameboard.trackShips(gameboard)
   }
   function attack(x, y) {
-    currentPlayer = !currentPlayer
-    gameboard.recieveAttack(shipsCreated, x, y, missedArray)
+    enemyGameboard.recieveAttack(gameboard, x, y, missedArray)
   }
-  function assignShips(index, x, y) {
-    gameboard.assignCoordinates(shipsCreated, index, x, y)
+  function assign(index, x, y) {
+    gameboard.assignCoordinates(gameboard, index, x, y)
+  }
+  function randomCoordiantes() {
+    gameboard.assignRandomCoordinates(gameboard)
   }
 
   // AI method
@@ -26,19 +24,20 @@ function Player(name, gameboard, state) {
     let isValid
 
     do {
-      x = Math.floor(Math.random() * 11)
-      y = Math.floor(Math.random() * 11)
+      x = Math.floor(Math.random() * 10)
+      y = Math.floor(Math.random() * 10)
 
       // eslint-disable-next-line arrow-body-style, no-loop-func
-      isValid = !randomMovesStorage.some((ship) => {
+      isValid = randomMovesStorage.some((ship) => {
+        // eslint-disable-next-line no-unused-expressions
         ship[0] === x && ship[1] === y
       })
-    } while (!isValid)
+    } while (isValid)
 
     return [x, y]
   }
 
-  function automatedRandomMoves() {
+  function autoMoves() {
     const [x, y] = randomMoves()
     attack(x, y)
     randomMovesStorage.push([x, y])
@@ -47,9 +46,10 @@ function Player(name, gameboard, state) {
   return {
     name,
     attack,
-    assignShips,
+    assign,
     gameOver,
-    automatedRandomMoves,
+    autoMoves,
+    randomCoordiantes,
   }
 }
 
