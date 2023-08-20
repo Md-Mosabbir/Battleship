@@ -12,6 +12,7 @@ function displayShips(ships, board) {
 
     // Add a data attribute with the index of the ship
     shipDiv.setAttribute('data-ship-index', index)
+    shipDiv.setAttribute('draggable', 'true')
     shipDiv.classList.add('ship')
     shipDiv.style.position = 'absolute'
 
@@ -19,11 +20,11 @@ function displayShips(ships, board) {
     shipDiv.style.bottom = `${ship.coordinates[0][1] * 62}px`
 
     if (ship.orientation === 'vertical') {
-      shipDiv.style.width = '62px'
-      shipDiv.style.height = `${ship.lengthShips * 62}px`
+      shipDiv.style.width = '60px'
+      shipDiv.style.height = `${ship.lengthShips * 62 - 2}px`
     } else {
-      shipDiv.style.width = `${ship.lengthShips * 62}px`
-      shipDiv.style.height = '62px'
+      shipDiv.style.width = `${ship.lengthShips * 62 - 2}px`
+      shipDiv.style.height = '60px'
     }
 
     playerDiv.appendChild(shipDiv)
