@@ -51,11 +51,3 @@
   padding: 20px 0;
   text-align: center;
 }
-
-#playerBoard .number-and-grid > div:nth-child(2) {
-  position: relative;
-}
-
-.ship.glow {
-  box-shadow: 0 0 10px rgba(255, 255, 0, 0.7); /* Yellow glow */
-}

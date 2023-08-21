@@ -1,4 +1,21 @@
-function displayShips(ships, board) {
+function displayShips(ships, board, appearance = 1) {
+  const shipSet = [
+    [
+      '../src/assets/images/shadow-shade/Aircraft-Carrier.png',
+      '../src/assets/images/shadow-shade/Battleship.png',
+      '../src/assets/images/shadow-shade/Submarine-1.png',
+      '../src/assets/images/shadow-shade/Submarine-2.png',
+      '../src/assets/images/shadow-shade/Destroyer.png',
+    ],
+    [
+      '../src/assets/images/colourful-shade/Aircraft-Carrier.png',
+      '../src/assets/images/colourful-shade/Battleship.png',
+      '../src/assets/images/colourful-shade/Submarine-1.png',
+      '../src/assets/images/colourful-shade/Submarine-2.png',
+      '../src/assets/images/colourful-shade/Destroyer.png',
+    ],
+  ]
+
   const playerDiv = document.getElementById(board)
 
   const shipDivs = playerDiv.querySelectorAll('.ship')
@@ -8,7 +25,18 @@ function displayShips(ships, board) {
 
   ships.forEach((ship, index) => {
     const shipDiv = document.createElement('div')
-    shipDiv.style.backgroundColor = '#000'
+    shipDiv.id = `${ship.name}`
+    shipDiv.style.border = '3px solid black'
+    shipDiv.style.display = 'flex'
+    shipDiv.style.justifyContent = 'center'
+    shipDiv.style.alignItems = 'center'
+
+    const image = document.createElement('img')
+
+    image.style.transform = 'scaleX(-1) '
+    image.src = `${shipSet[appearance][index]}`
+    image.style.pointerEvents = 'none'
+    shipDiv.appendChild(image)
 
     // Add a data attribute with the index of the ship
     shipDiv.setAttribute('data-ship-index', index)
@@ -20,11 +48,19 @@ function displayShips(ships, board) {
     shipDiv.style.bottom = `${ship.coordinates[0][1] * 62}px`
 
     if (ship.orientation === 'vertical') {
+      image.style.width = `${ship.lengthShips * 62 - 2 - 10}px`
+      image.style.height = '50px'
+
+      image.style.transform = 'rotate(90deg) scaleY(-1)'
+      // image.style.transform = 'scaleX(-1)'
+
       shipDiv.style.width = '60px'
       shipDiv.style.height = `${ship.lengthShips * 62 - 2}px`
     } else {
+      image.style.width = `${ship.lengthShips * 62 - 2 - 10}px`
       shipDiv.style.width = `${ship.lengthShips * 62 - 2}px`
       shipDiv.style.height = '60px'
+      image.style.height = '50px'
     }
 
     playerDiv.appendChild(shipDiv)
