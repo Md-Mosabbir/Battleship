@@ -1,19 +1,13 @@
-function Player(name, gameboard, enemyGameboard, state) {
+function Player(name, enemyGameboard, enemyShips, state) {
   const missedArray = []
 
   const randomMovesStorage = []
 
   function gameOver() {
-    enemyGameboard.trackShips(gameboard)
+    enemyGameboard.trackShips(enemyShips)
   }
   function attack(x, y) {
-    enemyGameboard.recieveAttack(gameboard, x, y, missedArray)
-  }
-  function assign(index, x, y) {
-    gameboard.assignCoordinates(gameboard, index, x, y)
-  }
-  function randomCoordiantes() {
-    gameboard.assignRandomCoordinates(gameboard)
+    return enemyGameboard.recieveAttack(enemyShips, x, y, missedArray)
   }
 
   // AI method
@@ -41,15 +35,36 @@ function Player(name, gameboard, enemyGameboard, state) {
     const [x, y] = randomMoves()
     attack(x, y)
     randomMovesStorage.push([x, y])
+    return randomMovesStorage
+  }
+  function getMissed() {
+    return missedArray
+  }
+  function checkAttacks() {
+    const array = [...randomMovesStorage]
+    const hits = array.filter((randomMove) => {
+      const [x, y] = randomMove
+      return enemyShips.some((ship) =>
+        ship.coordinates.some((coord) => coord[0] === x && coord[1] === y)
+      )
+    })
+
+    return hits
+  }
+
+  function matchCoords(x, y) {
+    return enemyGameboard.matchCoords(enemyShips, x, y)
   }
 
   return {
     name,
     attack,
-    assign,
     gameOver,
     autoMoves,
-    randomCoordiantes,
+    getMissed,
+    matchCoords,
+    state,
+    checkAttacks,
   }
 }
 

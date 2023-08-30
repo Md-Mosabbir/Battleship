@@ -41,7 +41,8 @@ function createGrid(idOfBoard) {
   for (let y = 9; y > -1; y--) {
     for (let x = 0; x < 10; x++) {
       const cell = document.createElement('div')
-      cell.className = 'cell'
+      cell.className = `${idOfBoard}-cell`
+      cell.classList.add('cell')
       cell.setAttribute('data-x', x)
       cell.setAttribute('data-y', y)
       grid.appendChild(cell)

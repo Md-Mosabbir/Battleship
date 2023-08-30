@@ -201,7 +201,11 @@ function Gameboard() {
     return updatedShips
   }
   // Todo: Missed attack manager
-
+  function matchCoords(array, a, b) {
+    return [...array].some((ship) =>
+      ship.coordinates.some((coords) => coords[0] === a && coords[1] === b)
+    )
+  }
   // Todo: recieveAttack()
   function recieveAttack(arr, x, y, missedArray) {
     const array = [...arr]
@@ -303,6 +307,7 @@ function Gameboard() {
 
   return {
     createShips,
+    matchCoords,
     assignOrientation,
     assignCoordinates,
     assignRandomCoordinates,

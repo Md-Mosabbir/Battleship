@@ -15,4 +15,4 @@ const villanShips = villanBoard.createShips()
 let playerRandom = heroBoard.assignRandomCoordinates(heroShips)
 let villanRandom = villanBoard.assignRandomCoordinates(villanShips)
 
-initialGameSetup(playerRandom, heroBoard, heroShips)
+initialGameSetup(playerRandom, heroBoard, villanRandom, villanBoard)
