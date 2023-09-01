@@ -77,7 +77,7 @@ function game(
         enemyBoardCell.forEach((cell) => {
           cell.style.pointerEvents = 'auto'
         })
-      }, 50)
+      }, 700)
     }
 
     //* Attack then AI will attack then turn return to as it is
