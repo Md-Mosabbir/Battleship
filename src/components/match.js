@@ -1,6 +1,7 @@
 import createGrid from './grids'
 import displayShips from './shipsUI'
 import Player from './player'
+import gameOver from './gameOver'
 
 function game(
   playerName,
@@ -21,7 +22,6 @@ function game(
 
   const enemyBoardCell = document.querySelectorAll('.enemyBoard-cell')
   const playerBoardCell = document.querySelectorAll('.playerBoard-cell')
-  let storePlayerShips
 
   function displayComputer(e, x, y) {
     const cell = e.target
@@ -59,20 +59,25 @@ function game(
     //* When I click the func will make sure IS the player turn true THEN
 
     if (one.state === true) {
-      const attack = one.attack(x, y)
-      storePlayerShips = attack
+      one.attack(x, y)
+
       displayComputer(e, x, y)
+      gameOver(player, computer)
+
       enemyBoardCell.forEach((cell) => {
         cell.style.pointerEvents = 'none'
       })
       setTimeout(() => {
         two.autoMoves()
+
         // Todo: displayAttack
         displayPlayer()
+        gameOver(player, computer)
+
         enemyBoardCell.forEach((cell) => {
           cell.style.pointerEvents = 'auto'
         })
-      }, 700)
+      }, 50)
     }
 
     //* Attack then AI will attack then turn return to as it is

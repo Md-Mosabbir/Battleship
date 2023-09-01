@@ -17,6 +17,79 @@ function initialGameSetup(
   const playerBoard = document.getElementById('playerBoard-grid')
   const ships = document.querySelectorAll('.ship')
 
+  const buttons = document.querySelector('.buttons')
+  const randomButton = document.createElement('button')
+  randomButton.id = 'randomizer'
+  randomButton.textContent = 'Randomise'
+  const appearance = document.createElement('button')
+  appearance.id = 'appearance'
+  appearance.textContent = 'Appearance'
+  const startButton = document.createElement('button')
+  startButton.id = 'start'
+  startButton.textContent = 'Start'
+  const playerOneInputContainer = document.getElementById('Player1')
+  const playerTwoInputContainer = document.getElementById('Player2')
+  const playerOneInput = document.createElement('input')
+  playerOneInput.id = 'Player-One'
+  playerOneInput.placeholder = 'Player-One'
+
+  const playerTwoInput = document.createElement('input')
+  playerTwoInput.id = 'Player-Two'
+  playerTwoInput.placeholder = 'Player-Two'
+
+  // Initialize random ship positions and display them
+  randomButton.addEventListener('click', () => {
+    // Generate new random ship positions and display them
+    const newRandom = playerSea.assignRandomCoordinates(playerShips)
+    displayShips(newRandom, 'playerBoard-grid', currentSet)
+
+    // Update the 'random' variable to the new positions
+    playerShips = newRandom
+  })
+
+  appearance.addEventListener('click', () => {
+    if (currentSet === 1) {
+      currentSet = 0
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else if (currentSet === 0) {
+      currentSet = 1
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    }
+  })
+
+  startButton.addEventListener('click', () => {
+    const playerOne = document.getElementById('Player-One')
+    const playerTwo = document.getElementById('Player-Two')
+    if (playerOne.value !== '' && playerTwo.value !== '') {
+      const nameOne = playerOne.value
+      const nameTwo = playerTwo.value
+      const player = document.getElementById('playerBoard')
+      const enemy = document.getElementById('enemyBoard')
+
+      const nav = document.querySelector('nav')
+
+      player.textContent = ''
+      enemy.textContent = ''
+      buttons.textContent = ''
+      nav.textContent = ''
+
+      game(
+        nameOne,
+        playerShips,
+        playerSea,
+        currentSet,
+        nameTwo,
+        computerShips,
+        computerSea
+      )
+    }
+  })
+  playerOneInputContainer.appendChild(playerOneInput)
+  playerTwoInputContainer.appendChild(playerTwoInput)
+  buttons.appendChild(startButton)
+  buttons.appendChild(appearance)
+  buttons.appendChild(randomButton)
+
   playerBoard.addEventListener('click', (e) => {
     if (e.target.classList.contains('ship')) {
       const index = e.target.getAttribute('data-ship-index')
@@ -75,59 +148,6 @@ function initialGameSetup(
       playerShips = updatedShips
       // Clear the draggedShip reference
       draggedShip = null
-    }
-  })
-
-  const randomButton = document.getElementById('randomizer')
-
-  // Initialize random ship positions and display them
-  randomButton.addEventListener('click', () => {
-    // Generate new random ship positions and display them
-    const newRandom = playerSea.assignRandomCoordinates(playerShips)
-    displayShips(newRandom, 'playerBoard-grid', currentSet)
-
-    // Update the 'random' variable to the new positions
-    playerShips = newRandom
-  })
-
-  const appearance = document.getElementById('appearence')
-  appearance.addEventListener('click', () => {
-    if (currentSet === 1) {
-      currentSet = 0
-      displayShips(playerShips, 'playerBoard-grid', currentSet)
-    } else if (currentSet === 0) {
-      currentSet = 1
-      displayShips(playerShips, 'playerBoard-grid', currentSet)
-    }
-  })
-
-  const startButton = document.getElementById('start')
-
-  startButton.addEventListener('click', () => {
-    const playerOne = document.getElementById('Player-One')
-    const playerTwo = document.getElementById('Player-Two')
-    if (playerOne.value !== '' && playerTwo.value !== '') {
-      const nameOne = playerOne.value
-      const nameTwo = playerTwo.value
-      const player = document.getElementById('playerBoard')
-      const enemy = document.getElementById('enemyBoard')
-      const buttons = document.getElementById('game-function')
-      const nav = document.querySelector('nav')
-
-      player.textContent = ''
-      enemy.textContent = ''
-      buttons.textContent = ''
-      nav.textContent = ''
-
-      game(
-        nameOne,
-        playerShips,
-        playerSea,
-        currentSet,
-        nameTwo,
-        computerShips,
-        computerSea
-      )
     }
   })
 }

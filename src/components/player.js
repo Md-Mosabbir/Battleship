@@ -1,13 +1,15 @@
 function Player(name, enemyGameboard, enemyShips, state) {
+  let storeEnemy = enemyShips
   const missedArray = []
 
   const randomMovesStorage = []
 
   function gameOver() {
-    enemyGameboard.trackShips(enemyShips)
+    return enemyGameboard.trackShips(storeEnemy)
   }
   function attack(x, y) {
-    return enemyGameboard.recieveAttack(enemyShips, x, y, missedArray)
+    const attacked = enemyGameboard.recieveAttack(storeEnemy, x, y, missedArray)
+    storeEnemy = attacked
   }
 
   // AI method
@@ -21,21 +23,24 @@ function Player(name, enemyGameboard, enemyShips, state) {
       x = Math.floor(Math.random() * 10)
       y = Math.floor(Math.random() * 10)
 
-      // eslint-disable-next-line arrow-body-style, no-loop-func
-      isValid = randomMovesStorage.some((ship) => {
-        // eslint-disable-next-line no-unused-expressions
-        ship[0] === x && ship[1] === y
-      })
-    } while (isValid)
+      // Check if the generated coordinates already exist in randomMovesStorage
+      // eslint-disable-next-line no-loop-func
+      isValid = !randomMovesStorage.some(
+        (coord) => coord[0] === x && coord[1] === y
+      )
+    } while (!isValid)
+
+    // Store the generated coordinates in randomMovesStorage
+    randomMovesStorage.push([x, y])
 
     return [x, y]
   }
 
   function autoMoves() {
     const [x, y] = randomMoves()
-    attack(x, y)
-    randomMovesStorage.push([x, y])
-    return randomMovesStorage
+
+    const setAttack = attack(x, y)
+    return setAttack
   }
   function getMissed() {
     return missedArray
@@ -44,7 +49,7 @@ function Player(name, enemyGameboard, enemyShips, state) {
     const array = [...randomMovesStorage]
     const hits = array.filter((randomMove) => {
       const [x, y] = randomMove
-      return enemyShips.some((ship) =>
+      return storeEnemy.some((ship) =>
         ship.coordinates.some((coord) => coord[0] === x && coord[1] === y)
       )
     })
