@@ -161,6 +161,46 @@ function initialGameSetup(
       draggedShip = null
     }
   })
+  playerBoard.addEventListener('touchstart', (e) => {
+    if (e.target.classList.contains('ship')) {
+      draggedShip = e.target
+    }
+  })
+
+  playerBoard.addEventListener('touchend', (e) => {
+    if (draggedShip) {
+      const rootStyles = getComputedStyle(document.documentElement)
+      const cellSize = rootStyles.getPropertyValue('--cell-size')
+      const size = parseInt(cellSize, 10)
+      const shipIndex = draggedShip.getAttribute('data-ship-index')
+      const touch = e.changedTouches[0] // Use e.changedTouches instead of e.touches
+      const offsetX = touch.clientX - playerBoard.getBoundingClientRect().left
+      const offsetY = touch.clientY - playerBoard.getBoundingClientRect().top
+      // Calculate grid coordinates based on offsetX and offsetY
+      const cellWidth = size
+      const cellHeight = size
+
+      // Adjusting for the gap and calculate the grid coordinates
+      const x = Math.floor((offsetX + 1) / cellWidth) // Adding 1 to account for the gap
+
+      // Reverse the y calculation to ensure it starts from the bottom
+      const y = Math.floor(
+        (playerBoard.clientHeight - offsetY + 1) / cellHeight
+      )
+
+      // Assign the new coordinates to the ship
+      const updatedShips = playerSea.assignCoordinates(
+        playerShips,
+        shipIndex,
+        x,
+        y
+      )
+      displayShips(updatedShips, 'playerBoard-grid', currentSet)
+      playerShips = updatedShips
+      // Clear the draggedShip reference
+      draggedShip = null
+    }
+  })
 }
 
 export default initialGameSetup

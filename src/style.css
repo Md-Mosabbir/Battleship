@@ -298,15 +298,16 @@ footer ul {
 }
 
 footer li {
-  font-size: 16px;
+  font-size: 1rem;
   margin: 5px 0;
 }
 
 /* Link Styles */
 footer a {
-  color: #fff;
+  color: var(--grid-bg-color);
   text-decoration: none;
   transition: color 0.3s;
+  font-size: 0.8rem;
 }
 
 footer a:hover {
