@@ -7,23 +7,24 @@
     <title>Battleship</title>
   </head>
   <body>
-    <div class="title">
-      <h1>Battleship</h1>
-    </div>
-    <nav>
-      <section id="Player1"></section>
-
-      <section id="Player2"></section>
-    </nav>
     <main>
-      <section class="buttons"></section>
       <section class="board-container">
-        <div class="board" id="playerBoard"></div>
+        <div class="both-divs">
+          <div class="board" id="playerBoard"></div>
 
-        <!-- Enemy Board -->
-        <div class="board" id="enemyBoard"></div>
+          <!-- Enemy Board -->
+          <div class="board" id="enemyBoard"></div>
+        </div>
       </section>
     </main>
+    <nav>
+      <h1>Battleship</h1>
+      <div id="players">
+        <div id="Player1"></div>
+        <div id="Player2"></div>
+      </div>
+      <section class="buttons"></section>
+    </nav>
   </body>
   <script src="main.js"></script>
 </html>
