@@ -1,18 +1,30 @@
-function displayShips(ships, board, appearance = 1) {
+import aircraftColour from '../assets/images/colourful-shade/Aircraft-Carrier.png'
+import battleshipColour from '../assets/images/colourful-shade/Battleship.png'
+import submarineColourOne from '../assets/images/colourful-shade/Submarine-1.png'
+import submarineColourTwo from '../assets/images/colourful-shade/Submarine-2.png'
+import destroyerColour from '../assets/images/colourful-shade/Destroyer.png'
+
+import aircraftShadow from '../assets/images/shadow-shade/Aircraft-Carrier.png'
+import battleshipShadow from '../assets/images/shadow-shade/Battleship.png'
+import submarineShadowOne from '../assets/images/shadow-shade/Submarine-1.png'
+import submarineShadowTwo from '../assets/images/shadow-shade/Submarine-2.png'
+import destroyerShadow from '../assets/images/shadow-shade/Destroyer.png'
+
+function displayShips(ships, board, appearance = 0) {
   const shipSet = [
     [
-      '../src/assets/images/shadow-shade/Aircraft-Carrier.png',
-      '../src/assets/images/shadow-shade/Battleship.png',
-      '../src/assets/images/shadow-shade/Submarine-1.png',
-      '../src/assets/images/shadow-shade/Submarine-2.png',
-      '../src/assets/images/shadow-shade/Destroyer.png',
+      aircraftColour,
+      battleshipColour,
+      submarineColourOne,
+      submarineColourTwo,
+      destroyerColour,
     ],
     [
-      '../src/assets/images/colourful-shade/Aircraft-Carrier.png',
-      '../src/assets/images/colourful-shade/Battleship.png',
-      '../src/assets/images/colourful-shade/Submarine-1.png',
-      '../src/assets/images/colourful-shade/Submarine-2.png',
-      '../src/assets/images/colourful-shade/Destroyer.png',
+      aircraftShadow,
+      battleshipShadow,
+      submarineShadowOne,
+      submarineShadowTwo,
+      destroyerShadow,
     ],
   ]
 
