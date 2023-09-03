@@ -28,7 +28,6 @@ function initialGameSetup(
   // Add a window resize event listener to trigger the update
   window.addEventListener('resize', updateShipDisplay)
 
-  // Initial ship display
   updateShipDisplay()
 
   const playerBoard = document.getElementById('playerBoard-grid')
