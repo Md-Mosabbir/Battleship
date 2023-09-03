@@ -1,5 +1,6 @@
 import './style.css'
 import Gameboard from './components/gameboard'
+import gameOver from './components/gameOver'
 
 import initialGameSetup from './components/initialGameSetup'
 

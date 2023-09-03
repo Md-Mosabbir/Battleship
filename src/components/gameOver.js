@@ -3,12 +3,11 @@ function gameOver(player, computer) {
 
   function content(person) {
     const gameoverContainer = document.createElement('div')
-    gameoverContainer.id = 'gameover'
+    gameoverContainer.id = 'gameover-container'
 
-    gameoverContainer.setAttribute(
-      'style',
-      'position: absolute; width: 100%; height: 100vh; z-index: 5;'
-    )
+    const gameover = document.createElement('div')
+    gameover.id = 'gameover'
+
     const winnerHeader = document.createElement('h1')
 
     winnerHeader.textContent = 'Gameover'
@@ -16,8 +15,9 @@ function gameOver(player, computer) {
     const winnerName = document.createElement('p')
     winnerName.textContent = `${person.name} is the Winner!`
 
-    gameoverContainer.appendChild(winnerHeader)
-    gameoverContainer.appendChild(winnerName)
+    gameover.appendChild(winnerHeader)
+    gameover.appendChild(winnerName)
+    gameoverContainer.appendChild(gameover)
     document.body.appendChild(gameoverContainer)
   }
   if (player.gameOver() === true) {

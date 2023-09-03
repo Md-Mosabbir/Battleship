@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Exo+2:wght@600&family=Roboto:wght@300&family=Rubik+Iso&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +11,26 @@
   --cell-size: 46px;
   --layout-number: calc(var(--cell-size) - 40px);
   --number-and-grid-width: 20px;
+
+  /* *-------Colours------*  */
+  --neutral-white: #fff;
+  --neutral-black: #000;
+
+  --grid-bg-color: hsl(194, 100%, 50%);
+  --nav-bg-color: #312e2b;
+  --nav-content-color: rgba(0, 0, 0, 0.514);
+  --name-bg-color: rgb(68, 68, 68);
+
+  /* *-------Font-------*  */
+  --primary-font-family: 'Exo 2', sans-serif;
+  --labels-font-family: 'Black Ops One', cursive;
+  --title-font-family: 'Rubik Iso', cursive;
+  --name-font-family: 'Roboto', sans-serif;
+
+  /* *-------Font Size-------*  */
+
+  --label-font-size: 1.05rem;
+  --name-font-size: 1rem;
 }
 
 body {
@@ -21,11 +40,10 @@ body {
   gap: 3rem;
   place-items: center;
   height: 100vh;
-  border: 10px solid black;
 }
 
 /* ----------------------------------------------------------------------------------------- */
-/* -----------------------The letters of the board -----------------------------------------*/
+/* ! -----------------------The letters of the board -----------------------------------------*/
 /* ----------------------------------------------------------------------------------------- */
 
 .all-letters {
@@ -38,6 +56,8 @@ body {
 
 .letter {
   width: var(--cell-size);
+  font-family: var(--labels-font-family);
+  font-size: var(--label-font-size);
   display: flex;
   justify-content: center;
   height: 25px;
@@ -47,7 +67,7 @@ body {
 /* ----------------------------------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------------------------------- */
-/* -----------------------The numbers of the board -----------------------------------------*/
+/* !-----------------------The numbers of the board -----------------------------------------*/
 /* ----------------------------------------------------------------------------------------- */
 
 .number-and-grid {
@@ -61,6 +81,8 @@ body {
   font-weight: 900;
 }
 .number {
+  font-family: var(--labels-font-family);
+  font-size: var(--label-font-size);
   display: flex;
   align-items: center;
   text-align: center;
@@ -70,7 +92,7 @@ body {
 /* ----------------------------------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------------------------------- */
-/* -----------------------The GRID of the board -----------------------------------------*/
+/* !-----------------------The GRID of the board -----------------------------------------*/
 /* ----------------------------------------------------------------------------------------- */
 
 .grid {
@@ -90,17 +112,16 @@ body {
 /* ----------------------------------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------------------------------- */
-/* -----------------------NAV BAR ------------------------------------------------------------*/
+/* !-----------------------NAV BAR ------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------------------- */
 
 nav {
   display: grid;
   grid-template-rows: 10% auto 1fr;
-  border: 1px solid black;
-  background-color: #312e2b;
+  border: 1px solid var(--neutral-black);
+  background-color: var(--nav-bg-color);
 
   min-width: calc(20rem + 2vw);
-
   max-width: 32rem;
   padding: 2rem;
   border-radius: 0.75rem;
@@ -109,12 +130,14 @@ main {
   width: fit-content;
 }
 nav h1 {
-  color: #fff;
+  font-family: var(--title-font-family);
+  color: var(--neutral-white);
   font-size: 2rem;
 }
 
 nav button,
 nav input {
+  font-family: 'Exo 2', sans-serif;
   font-size: 1rem;
   width: 100%;
   padding: 1.2em 1em;
@@ -122,10 +145,10 @@ nav input {
   border-radius: 0.75rem;
   text-align: left;
 
-  border: 1px solid rgba(0, 0, 0, 0.514);
+  border: 1px solid var(--nav-content-color);
   background-color: hsla(0, 0%, 0%, 0.72);
-  color: #fff;
-  box-shadow: inset 0 -0.1rem 0 0 rgba(0, 0, 0, 0.438);
+  color: var(--neutral-white);
+  box-shadow: inset 0 -0.1rem 0 0 var(--nav-content-color);
 }
 
 .buttons {
@@ -144,9 +167,10 @@ nav button:hover {
 }
 
 #start {
-  background-color: green;
+  background-color: #008000;
   padding: 1.5em 2em;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 #start:active {
   background-color: greenyellow;
@@ -164,7 +188,7 @@ nav button:active {
 /* ----------------------------------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------------------------------- */
-/* -----------------------IN GAME -  GRIDS ------------------------------------------------------------*/
+/* !-----------------------IN GAME -  GRIDS ------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------------------- */
 
 .span-width {
@@ -182,6 +206,9 @@ nav button:active {
   display: flex;
   flex-direction: column-reverse;
 }
+
+/* !-----------------------NAMES ------------------------------------------------------------*/
+
 .name-container {
   display: flex;
   justify-content: space-around;
@@ -189,10 +216,65 @@ nav button:active {
   margin: 2rem;
 }
 
+.name-container > div {
+  background-color: var(--name-bg-color);
+  font-family: var(--name-font-family);
+  font-size: var(--name-font-family);
+  padding: 0.35em 0.62em;
+  border: 1px solid rgba(0, 0, 0, 0.349);
+  color: #fff;
+  border-radius: 1rem;
+}
+
+/* ----------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------- */
+/* !----------------------- Gameover ------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------------- */
+#gameover-container {
+  background-color: var(--nav-bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gameover {
+  min-width: 50%;
+  min-height: 20rem;
+  background-color: #008000;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#gameover h1 {
+  font-family: var(--labels-font-family);
+  font-size: 2.5rem;
+}
+
+#gameover p {
+  font-size: 1.5rem;
+  color: var(--neutral-white);
+  background-color: var(--neutral-black);
+  width: 100%;
+  text-align: center;
+}
 /* ----------------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
 @media (max-width: 1150px) {
+  :root {
+    --cell-size: 32px;
+  }
   nav {
     min-width: 40rem;
   }
@@ -203,18 +285,31 @@ nav button:active {
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 850px) {
   :root {
     --cell-size: 32px;
+    --label-font-size: 0.8rem;
+    --name-font-family: 0.8rem;
   }
   nav {
     min-width: 100%;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   :root {
-    --cell-size: 16px;
+    --cell-size: 22px;
     --number-and-grid-width: 15px;
+    --label-font-size: 0.5rem;
+    --name-font-family: 0.4rem;
+  }
+  .letter {
+    place-items: center;
+  }
+  .number {
+    justify-content: flex-end;
+  }
+  .number-and-grid {
+    gap: 0.5rem;
   }
 }
