@@ -161,9 +161,13 @@ function initialGameSetup(
     }
   })
   playerBoard.addEventListener('touchstart', (e) => {
+    e.preventDefault()
     if (e.target.classList.contains('ship')) {
       draggedShip = e.target
     }
+  })
+  playerBoard.addEventListener('touchmove', (e) => {
+    e.preventDefault()
   })
 
   playerBoard.addEventListener('touchend', (e) => {
