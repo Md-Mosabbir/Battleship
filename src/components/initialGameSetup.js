@@ -9,7 +9,7 @@ function initialGameSetup(
   computerShips,
   computerSea
 ) {
-  let currentSet = 1
+  let currentSet = 0
   createGrid('playerBoard')
 
   const updateShipDisplay = () => {
