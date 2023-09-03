@@ -15,10 +15,51 @@ function game(
   const player = Player(playerName, computerSea, computerShips, true)
   const computer = Player(computerName, playerSea, playerShips, false)
 
+  function createName() {
+    const boardContainer = document.querySelector('.board-container')
+    const nameDiv = document.createElement('div')
+    nameDiv.classList.add('name-container')
+    const firstPlayerNameDiv = document.createElement('div')
+    const firstPlayerName = document.createElement('h2')
+    firstPlayerName.textContent = `${player.name}`
+    firstPlayerName.classList.add('player-one-name')
+
+    const secondPlayerNameDiv = document.createElement('div')
+    const secondPlayerName = document.createElement('h2')
+    secondPlayerName.textContent = `${computer.name}`
+    secondPlayerName.classList.add('player-two-name')
+
+    firstPlayerNameDiv.appendChild(firstPlayerName)
+    secondPlayerNameDiv.appendChild(secondPlayerName)
+
+    nameDiv.appendChild(firstPlayerNameDiv)
+    nameDiv.appendChild(secondPlayerNameDiv)
+
+    boardContainer.appendChild(nameDiv)
+  }
+  createName()
+
   createGrid('playerBoard')
   createGrid('enemyBoard')
 
-  displayShips(playerShips, 'playerBoard-grid', currentSet)
+  const updateShipDisplay = () => {
+    if (window.innerWidth <= 1150) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else if (window.innerWidth <= 750) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else if (window.innerWidth <= 400) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else {
+      // Default state or larger screens
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    }
+  }
+
+  // Add a window resize event listener to trigger the update
+  window.addEventListener('resize', updateShipDisplay)
+
+  // Initial ship display
+  updateShipDisplay()
 
   const enemyBoardCell = document.querySelectorAll('.enemyBoard-cell')
   const playerBoardCell = document.querySelectorAll('.playerBoard-cell')

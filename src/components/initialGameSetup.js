@@ -12,10 +12,26 @@ function initialGameSetup(
   let currentSet = 1
   createGrid('playerBoard')
 
-  displayShips(playerShips, 'playerBoard-grid', currentSet)
+  const updateShipDisplay = () => {
+    if (window.innerWidth <= 1150) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else if (window.innerWidth <= 750) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else if (window.innerWidth <= 400) {
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    } else {
+      // Default state or larger screens
+      displayShips(playerShips, 'playerBoard-grid', currentSet)
+    }
+  }
+
+  // Add a window resize event listener to trigger the update
+  window.addEventListener('resize', updateShipDisplay)
+
+  // Initial ship display
+  updateShipDisplay()
 
   const playerBoard = document.getElementById('playerBoard-grid')
-  const ships = document.querySelectorAll('.ship')
 
   const buttons = document.querySelector('.buttons')
   const randomButton = document.createElement('button')
@@ -67,11 +83,13 @@ function initialGameSetup(
       const enemy = document.getElementById('enemyBoard')
 
       const nav = document.querySelector('nav')
+      const main = document.querySelector('main')
 
       player.textContent = ''
       enemy.textContent = ''
-      buttons.textContent = ''
-      nav.textContent = ''
+      main.classList.add('game-on')
+      main.classList.add('span-width')
+      nav.remove()
 
       game(
         nameOne,
@@ -93,6 +111,7 @@ function initialGameSetup(
   playerBoard.addEventListener('click', (e) => {
     if (e.target.classList.contains('ship')) {
       const index = e.target.getAttribute('data-ship-index')
+
       const changeIt = playerSea.assignOrientation(playerShips, index)
       displayShips(changeIt, 'playerBoard-grid', currentSet)
       playerShips = changeIt
@@ -104,17 +123,6 @@ function initialGameSetup(
     e.preventDefault() // Prevent the default behavior that disallows dropping
   })
 
-  ships.forEach((ship) => {
-    ship.addEventListener('click', (e) => {
-      if (e.target.classList.contains('ship')) {
-        const index = e.target.getAttribute('data-ship-index')
-        const changeIt = playerSea.assignOrientation(playerShips, index)
-        displayShips(changeIt, 'playerBoard-grid', currentSet)
-        playerShips = changeIt
-      }
-    })
-  })
-
   playerBoard.addEventListener('dragstart', (e) => {
     if (e.target.classList.contains('ship')) {
       draggedShip = e.target
@@ -123,12 +131,15 @@ function initialGameSetup(
 
   playerBoard.addEventListener('drop', (e) => {
     if (draggedShip) {
+      const rootStyles = getComputedStyle(document.documentElement)
+      const cellSize = rootStyles.getPropertyValue('--cell-size')
+      const size = parseInt(cellSize, 10)
       const shipIndex = draggedShip.getAttribute('data-ship-index')
       const offsetX = e.clientX - playerBoard.getBoundingClientRect().left
       const offsetY = e.clientY - playerBoard.getBoundingClientRect().top
       // Calculate grid coordinates based on offsetX and offsetY
-      const cellWidth = 62 // Assuming each cell is 62x62 including the gap
-      const cellHeight = 62 // Assuming each cell is 62x62 including the gap
+      const cellWidth = size
+      const cellHeight = size
 
       // Adjusting for the gap and calculate the grid coordinates
       const x = Math.floor((offsetX + 1) / cellWidth) // Adding 1 to account for the gap

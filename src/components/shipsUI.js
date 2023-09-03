@@ -44,23 +44,31 @@ function displayShips(ships, board, appearance = 1) {
     shipDiv.classList.add('ship')
     shipDiv.style.position = 'absolute'
 
-    shipDiv.style.left = `${ship.coordinates[0][0] * 62}px`
-    shipDiv.style.bottom = `${ship.coordinates[0][1] * 62}px`
+    const rootStyles = getComputedStyle(document.documentElement)
+    const cellSize = rootStyles.getPropertyValue('--cell-size')
+    const size = parseInt(cellSize, 10)
+
+    // Assuming cellSize is obtained correctly as a string like "40px"
+    // and it represents the size in pixels
+
+    shipDiv.style.left = `${ship.coordinates[0][0] * (size + 2)}px`
+    shipDiv.style.bottom = `${ship.coordinates[0][1] * (size + 2)}px`
 
     if (ship.orientation === 'vertical') {
-      image.style.width = `${ship.lengthShips * 62 - 2 - 10}px`
-      image.style.height = '50px'
+      image.style.width = `${ship.lengthShips * (size - 10)}px`
+      image.style.height = `${size}`
 
       image.style.transform = 'rotate(90deg) scaleY(-1)'
       // image.style.transform = 'scaleX(-1)'
 
-      shipDiv.style.width = '60px'
-      shipDiv.style.height = `${ship.lengthShips * 62 - 2}px`
+      shipDiv.style.width = `${cellSize}`
+      shipDiv.style.height = `${ship.lengthShips * (size + 2) - 2}px`
     } else {
-      image.style.width = `${ship.lengthShips * 62 - 2 - 10}px`
-      shipDiv.style.width = `${ship.lengthShips * 62 - 2}px`
-      shipDiv.style.height = '60px'
-      image.style.height = '50px'
+      shipDiv.style.height = `${cellSize}`
+      shipDiv.style.width = `${ship.lengthShips * (size + 2) - 2}px`
+
+      image.style.width = `${ship.lengthShips * (size - 10)}px`
+      image.style.height = `${size}`
     }
 
     playerDiv.appendChild(shipDiv)

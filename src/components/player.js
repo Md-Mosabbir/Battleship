@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 function Player(name, enemyGameboard, enemyShips, state) {
   let storeEnemy = enemyShips
   const missedArray = []
