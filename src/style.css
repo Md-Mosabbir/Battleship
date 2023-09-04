@@ -340,7 +340,7 @@ footer a:hover {
 
 @media (max-width: 450px) {
   :root {
-    --cell-size: 27px;
+    --cell-size: 32px;
     --number-and-grid-width: 15px;
     --label-font-size: 0.7rem;
     --name-font-family: 0.4rem;
@@ -359,5 +359,11 @@ footer a:hover {
   }
   #gameover p {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 350px) {
+  :root {
+    --cell-size: 22px;
   }
 }

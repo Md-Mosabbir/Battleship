@@ -116,6 +116,34 @@ function initialGameSetup(
       playerShips = changeIt
     }
   })
+
+  let lastTapTime = 0
+  function handleDoubleTap(e) {
+    if (e.target.classList.contains('ship')) {
+      const index = e.target.getAttribute('data-ship-index')
+
+      const changeIt = playerSea.assignOrientation(playerShips, index)
+      displayShips(changeIt, 'playerBoard-grid', currentSet)
+      playerShips = changeIt
+    }
+  }
+
+  // Add a touchstart event listener
+  playerBoard.addEventListener('touchstart', (e) => {
+    const currentTime = new Date().getTime()
+    const tapTimeDiff = currentTime - lastTapTime
+
+    if (tapTimeDiff < 300) {
+      // If the time difference between two taps is less than 300 milliseconds,
+      // consider it a double tap
+      handleDoubleTap(e)
+    }
+
+    lastTapTime = currentTime
+  })
+
+  // Function to handle the double tap event
+
   let draggedShip = null
 
   playerBoard.addEventListener('dragover', (e) => {
