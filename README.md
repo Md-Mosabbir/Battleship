@@ -4,15 +4,10 @@ Welcome to the Battleship Game! This project is a fully responsive web-based imp
 
 ## Table of Contents
 
-- [Demo](#demo)
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [How to Play](#how-to-play)
 - [Installation](#installation)
-
-## Demo
-
-Check out the live demo [here](#) (Add the link to your live demo).
 
 ## Features
 
