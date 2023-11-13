@@ -27,8 +27,4 @@ Welcome to the Battleship Game! This project is a fully responsive web-based imp
 
 ## How to Play
 
-1. Click the click to the website.
-
-   ```https://md-mosabbir.github.io/Battleship/
-
-   ```
+1. Click the link [here](https://md-mosabbir.github.io/Battleship/).
